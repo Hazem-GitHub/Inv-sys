@@ -1,0 +1,93 @@
+
+    <!-- <nav id="top-nav-container" class="uk-navbar-container" uk-sticky="offset: 0; bottom: #top" uk-navbar>
+        commented---<button class="uk-offcanvas-close" type="button" uk-close></button>
+        <a class="uk-navbar-item uk-logo" href="#">
+            <img src="../../assets/img/logo.svg" alt="logo" />
+        </a>
+        
+    
+        <div class="uk-button" class="uk-navbar-left uk-margin-small-left">
+            <a href="#offcanvas-push" uk-toggle="target: #offcanvas-push" class="uk-icon-button" matTooltip="Expand / Collapse Menu" matTooltipPosition="after" aria-label="Expand / Collapse Menu">
+                commented---<span class="uk-icon-button" uk-icon="icon: chevron-right; ratio: 1"></span>
+                commented---<span class="fas fa fa-chevron-right uk-icon-button"></span>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+            <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i>  {{ pageTitle }}</span>
+        </div>
+        
+        <div class="uk-navbar-right">
+    
+            <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#"><i class="fas fa-bell active"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>
+                    <div id="Notifications-dropdown-container" class="uk-navbar-dropdown" uk-drop=" mode: click;">
+                        <ul class="uk-nav uk-navbar-dropdown-nav uk-list uk-list-large">
+                            <li routerLinkActive="active" class="uk-active"><a routerLink="#"><p><small>5 mins ago</small></p><p>"New Invoice created by TEAM MEMBER for CLIENT NAME"</p></a></li>
+                            <li class="uk-nav-header"><hr/></li>
+                            <li routerLinkActive="active"><a routerLink="#"><p><small>2 hrs ago</small></p><p>"New client (CLIENT NAME) was Added by TEAM MEMBER"</p></a></li>
+                            <li class="uk-nav-header"><hr/></li>
+                            <li routerLinkActive="active"><a routerLink="#"><p><small>2 hrs ago</small></p><p>"New client (CLIENT NAME) was Added by TEAM MEMBER"</p></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-user"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>
+                    <div id="User-dropdown-container" class="uk-navbar-dropdown" uk-drop=" mode: click;">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li routerLinkActive="active"><a routerLink="#"><i class="fas fa-sign-out-alt"></i><span class="uk-margin-small-left"> Logout</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+    
+        </div>
+    </nav> -->
+
+
+    
+    <nav id="top-nav-container" class="uk-navbar-container" uk-sticky="offset: 0; bottom: #top" uk-navbar>
+        
+        
+        
+        <a class="uk-navbar-item uk-logo" routerLink="/">
+            <img src="../../assets/img/logo.svg" alt="logo" />
+        </a>
+
+        <div class="uk-navbar-left uk-margin-small-left">
+            <button mat-icon-button color="{{ isNavOpened ? 'basic' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
+                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-chevron-right' }} fa-bars"></i>
+            </button>
+            <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i>  {{ pageTitle }}</span>
+
+        </div>
+        
+        
+        <div class="uk-navbar-right uk-margin-small-right">
+            <!-- <ul class="uk-navbar-nav">
+                <li>
+                    <a href="#"><i class="fas fa-bell active"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>
+                    <div id="Notifications-dropdown-container" class="uk-navbar-dropdown" uk-drop=" mode: click;">
+                        <ul class="uk-nav uk-navbar-dropdown-nav uk-list uk-list-large">
+                            <li routerLinkActive="active" class="uk-active"><a routerLink="#"><p><small>5 mins ago</small></p><p>"New Invoice created by TEAM MEMBER for CLIENT NAME"</p></a></li>
+                            <li class="uk-nav-header"><hr/></li>
+                            <li routerLinkActive="active"><a routerLink="#"><p><small>2 hrs ago</small></p><p>"New client (CLIENT NAME) was Added by TEAM MEMBER"</p></a></li>
+                            <li class="uk-nav-header"><hr/></li>
+                            <li routerLinkActive="active"><a routerLink="#"><p><small>2 hrs ago</small></p><p>"New client (CLIENT NAME) was Added by TEAM MEMBER"</p></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#"><i class="fas fa-user"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>
+                    <div id="User-dropdown-container" class="uk-navbar-dropdown" uk-drop=" mode: click;">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li routerLinkActive="active"><a routerLink="#"><i class="fas fa-sign-out-alt"></i><span class="uk-margin-small-left"> Logout</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul> -->
+    
+        </div>
+    </nav>
+
+
+    

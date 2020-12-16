@@ -1,0 +1,115 @@
+<div class="add-btn-padding" uk-margin>
+    <button mat-flat-button color="primary" routerLink="new">
+        <i class="fas fa-plus"></i> Add New Invoice
+    </button>
+</div>
+
+
+<div class="table-container container-full-width">
+    <div class="top-header-padding">
+        <h3><strong>Invoices List</strong></h3>
+    </div>
+    <!-- <div class="spinnerContainer">
+        <div uk-spinner></div>
+    </div> -->
+    
+    <!-- <table *ngIf="invoices?.length != 0" id="InvoicesTable" class="uk-table" #dataTable> -->
+    <!-- </table> -->
+
+    <div class="search-box-container">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+            <i class="fas fa-search" matSuffix></i>
+        </mat-form-field>
+    </div>
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="allDataArr?.length != 0" id="InvoicesTable" class="uk-table"  matSort matSortActive="id" matSortDirection="desc">
+
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let item">{{item.id}}</td>
+        </ng-container>
+
+        <!-- creation date Column -->
+        <ng-container matColumnDef="CreationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Creation Date</th>
+            <td mat-cell *matCellDef="let item">{{ item.CreationDate | date: "MMM d, y, h:mm a" }}</td>
+        </ng-container>
+        <!-- due date Column -->
+        <!-- <ng-container matColumnDef="DueDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</th>
+            <td mat-cell *matCellDef="let item">{{item.DueDate}}</td>
+        </ng-container> -->
+
+        <!-- client column -->
+        <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Name</th>
+            <td mat-cell *matCellDef="let item">{{item.clientName}}</td>
+        </ng-container>
+
+        <!-- project column -->
+        <ng-container matColumnDef="projectName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+            <td mat-cell *matCellDef="let item">{{item.projectName}}</td>
+        </ng-container>
+
+        <!-- currency column -->
+        <!-- <ng-container matColumnDef="currency">
+            <th mat-header-cell *matHeaderCellDef>Currency</th>
+            <td mat-cell *matCellDef="let item">{{item.currency}}</td>
+        </ng-container> -->
+
+        <!-- sub total column -->
+        <!-- <ng-container matColumnDef="subTotal">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>SubTotal</th>
+            <td mat-cell *matCellDef="let item">{{item.subTotal | mycurrency:item.currency}}</td>
+        </ng-container> -->
+
+        <!-- tax rate column -->
+        <!-- <ng-container matColumnDef="taxRate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>VAT Rate</th>
+            <td mat-cell *matCellDef="let item">{{item.taxes ? (item.taxRate | percent:"1.0-2"): (0.00 | percent:"1.0-2")}}</td>
+        </ng-container> -->
+
+        <!-- total column -->
+        <ng-container matColumnDef="totalAmounts">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+            <td mat-cell *matCellDef="let item">{{item.totalAmounts | mycurrency:item.currency}}</td>
+        </ng-container>
+
+        <!-- status column -->
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let item">
+                <span *ngIf="!isOverdue">
+                    <span><i class="fas fa-file-invoice-dollar status-icon status-color-{{item.statusId}}"></i> {{item.status}}</span>
+                </span>
+                <span *ngIf="isOverdue">
+                    <span *ngIf="!isCollected"><i class="fas fa-file-invoice-dollar status-icon status-color-3"></i> Overdue</span>
+                    <span *ngIf="isCollected"><i class="fas fa-file-invoice-dollar status-icon status-color-{{item.statusId}}"></i> {{item.status}}</span>
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- actions column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let item">
+                <ul class="uk-iconnav">
+                    <li><button mat-raised-button routerLink="/invoices/view/{{item.id}}" data-invoiceId="{{item.id}}" class='view-invoice-btn uk-text-center'><i class="far fa-eye"></i></button></li>
+                    <li><button mat-raised-button routerLink="/invoices/edit/{{item.id}}" data-invoiceId="{{item.id}}"  class='edit-invoice-btn uk-text-center'><i class="far fa-edit"></i></button></li>
+                    <li><button mat-raised-button color="warn" (click)="openDeleteDialog(item.id)" data-invoiceId="{{item.id}}"  class='delete-invoice-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
+                </ul>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
+</div>

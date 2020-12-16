@@ -1,0 +1,9 @@
+@mixin theme($light-theme: true) {
+    @if $light-theme {
+        background: $app-secondary-color!important;
+        color: $app-primary-color!important;
+    }@else{
+        background: darken($app-secondary-color, 80%)!important;
+        color: lighten($app-secondary-color, 50%)!important;
+    }
+}

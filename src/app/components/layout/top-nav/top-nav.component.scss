@@ -1,0 +1,167 @@
+/* Custom SCSS/SASS Files */
+@import 'variables';
+@import 'mixins';
+
+
+#top-nav-container{
+    background-color: #ffffff;
+    border-bottom: 1px solid $very-light-gray-color;
+    transition: width 0.3s ease-out;
+    z-index: 1000;
+    height: 80px;
+    .uk-navbar-nav a i{
+        font-size: 16px;
+        color: $light-gray-color;
+    }
+    .page-title{
+        font-size: 16px;
+        font-weight: 500;
+        color: $app-primary-color;
+        i{
+            font-size: 1.4em;
+            margin-right: 10px;
+        }
+    }
+
+    
+    .uk-logo{
+        background-color: $app-primary-color;
+        // border-bottom: 1px solid $light-gray-color;
+        overflow: hidden;
+        border-bottom: 1px solid $very-light-gray-color;
+        border-right: 1px solid $very-light-gray-color;
+        width: 78px;
+        img{
+            width: 50px;
+        }
+    }
+    .uk-nav{
+        padding: 10px;
+        height:calc(100vh - 100px);
+        .uk-flex{
+            // width: 100%;
+            & > div{
+                // width: 100%;
+            }
+        }
+    }
+        
+    li.menu-item {
+        padding: 5px;
+        width:100%;
+        & a.menu-link{
+            padding: 12px 16px;
+            width:100%;
+            & i{
+                font-size: 16px;
+                color: $light-gray-color;
+                transition: color 0.3s ease-out;
+            }
+            & span{
+                font-size: 12px;
+                color: $dark-gray-color;
+                font-weight: 400;
+            }
+        }
+        &:hover{
+            & a.menu-link{
+                & i{
+                    color: $app-primary-color;
+                }
+                & span{
+                    color: $app-primary-color;
+                }
+            }
+        }    
+    }
+        
+    li.menu-item.active{
+        & > a.menu-link{
+            & > i{
+                color: $app-primary-color;
+            }
+            & > span{
+                color: $app-primary-color;
+                font-weight: 700;
+            }
+        }
+    }
+
+    // #Notifications-dropdown-container{
+    //     ul{
+    //         li{
+                
+    //             a{
+    //                 p{
+    //                     color: $dark-gray-color;
+    //                     font-size: 12px;
+    //                     font-weight: 500;
+    //                     small{
+    //                         color: $light-gray-color;
+    //                         font-size: 11px;
+    //                         font-weight: 500;
+    //                     }
+    //                 }
+                    
+    //             }
+    //             &.uk-active{
+    //                 position: relative;
+    //                 &::before{
+    //                     content:'';
+    //                     background-color: $app-primary-color;
+    //                     border: 1px solid $light-gray-color;
+    //                     width:10px;
+    //                     height:10px;
+    //                     border-radius: 50%;
+    //                     position: absolute;
+    //                     top:5px;
+    //                     right:5px;
+    //                     z-index: 1;
+    //                 }
+    //                 a{
+    //                     p{
+    //                         color: $app-primary-color;
+    //                         font-size: 12px;
+    //                         font-weight: 500;
+    //                         small{
+    //                             color: $app-primary-color;
+    //                             font-size: 11px;
+    //                             font-weight: 500;
+    //                         }
+    //                     }
+                        
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // #User-dropdown-container{
+    //     ul{
+    //         li{
+    //             a{
+    //                 transition: width 0.3s ease-out;
+    //                 i{
+    //                     color: $light-gray-color!important;
+    //                     font-size: 16px;
+    //                     transition: color 0.3s ease-out;
+    //                 }
+    //                 span{
+    //                     color: $dark-gray-color!important;
+    //                     font-size: 12px;
+    //                     font-weight: 500;
+    //                     transition: color 0.3s ease-out;
+    //                 }
+    //                 &:hover{
+    //                     i{
+    //                         color: darken($warning-red-color,5%)!important;
+    //                     }
+    //                     span{
+    //                         color: darken($warning-red-color,5%)!important;
+    //                         font-weight: 500;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}

@@ -1,0 +1,88 @@
+/* Custom SCSS/SASS Files */
+@import 'variables';
+@import 'mixins';
+@import 'keyframes';
+
+
+
+
+#offcanvas-push{
+    // display: block!important;
+}
+#side-nav-container {
+    // position: fixed;
+    // height:100vh;
+    // width: auto;
+    // top: 100px;
+    height:calc(100vh - 80px);
+    background-color: #ffffff;
+    padding: 0;
+    border-right: 0px solid $very-light-gray-color;
+    // transition: width 0.3s ease-out;
+    div{
+        width:100%;
+    }
+    // .uk-logo{
+    //     // background-color: $app-primary-color;
+    //     // border-bottom: 1px solid $light-gray-color;
+    //     overflow: hidden;
+    //     border-bottom: 1px solid $very-light-gray-color;
+    //     width:83px;
+    // }
+    .uk-nav{
+        padding: 10px;
+        height: 100%;
+        .uk-flex{
+            // width: 100%;
+            & > div{
+                // width: 100%;
+            }
+        }
+    }
+    
+    li.menu-item {
+        padding: 5px;
+        width:100%;
+        & a.menu-link{
+            padding: 12px 16px;
+            width:100%;
+            & i{
+                font-size: 16px;
+                color: $light-gray-color;
+                transition: color 0.3s ease-out;
+            }
+            & span{
+                font-size: 12px;
+                color: $dark-gray-color;
+                font-weight: 400;
+            }
+        }
+        &:hover{
+            & a.menu-link{
+                & i{
+                    color: $app-primary-color;
+                }
+                & span{
+                    color: $app-primary-color;
+                }
+            }
+        }
+        
+    }
+    
+    li.menu-item.active{
+        & > a.menu-link{
+            & > i{
+                color: $app-primary-color;
+            }
+            & > span{
+                color: $app-primary-color;
+                font-weight: 700;
+            }
+        }
+    }
+    
+}
+
+
+

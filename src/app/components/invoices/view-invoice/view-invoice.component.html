@@ -1,0 +1,151 @@
+<div class="add-btn-padding uk-flex uk-flex-left@s uk-flex-between" uk-margin>
+    <button mat-flat-button color="primary" class="uk-margin-small-right" routerLink="/invoices/edit/{{allDataObj.id}}">
+        <i class="fas fa-edit"></i> Edit
+    </button>
+    <button mat-stroked-button color="basic" class="uk-margin-small-right" routerLink="/invoices/new">
+        Create New Invoice
+    </button>
+</div>
+
+
+<div class="details-container container-full-width">
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div *ngIf="!isLoadingResults">
+
+        <div class="top-header-padding">
+            <h1><strong>Invoice Details</strong></h1>
+        </div>
+        <!-- <div class="top-header-padding">
+            <h2><strong>Invoice ID {{allDataObj.id}}</strong></h2>
+        </div> -->
+        <div class="data-wrapper">
+            <div class="data-container">
+                <label>ID</label>
+                <p>{{allDataObj.id}}</p>
+            </div>
+            <div class="data-container">
+                <label>Created On</label>
+                <p>{{allDataObj.CreationDate}}</p>
+            </div>
+            <div class="data-container">
+                <label>Due Date</label>
+                <p>{{allDataObj.DueDate}}</p>
+            </div>
+            <!-- <div class="data-container">
+                <label>Status</label>
+                <p>{{allDataObj.status}}</p>
+            </div> -->
+            <div class="data-container">
+                <label>Status</label>
+                <span *ngIf="!isOverdue">
+                    <p><i class="fas fa-file-invoice-dollar status-color-{{allDataObj.statusId}}"></i>{{allDataObj.status}}</p>
+                </span>
+                <span *ngIf="isOverdue">
+                    <p *ngIf="!isCollected"><i class="fas fa-file-invoice-dollar status-color-3"></i>Overdue</p>
+                    <p *ngIf="isCollected"><i class="fas fa-file-invoice-dollar status-color-{{allDataObj.statusId}}"></i>{{allDataObj.status}}</p>
+                </span>
+                
+            </div>
+            <div class="data-container">
+                <label>Client</label>
+                <p>{{allDataObj.clientName}}</p>
+            </div>
+            <div class="data-container">
+                <label>Payment Method</label>
+                <p>{{allDataObj.paymentMethod}}</p>
+            </div>
+            <div class="data-container">
+                <label>Project Name</label>
+                <p>{{allDataObj.projectName}}</p>
+            </div>
+            <div class="data-container">
+                <label>Project Description</label>
+                <p>{{allDataObj.projectDescription}}</p>
+            </div>
+            <div class="data-container">
+                <label>Currency</label>
+                <p>{{allDataObj.currency}}</p>
+            </div>
+            <div class="data-container">
+                <label>Is VAT Applied?</label>
+                <p>{{allDataObj.taxes? 'Yes': 'No'}}</p>
+            </div>
+            
+            <div *ngIf="allDataObj.taxes" class="data-container">
+                <label>SubTotal Amounts</label>
+                <p>{{allDataObj.subTotal | mycurrency:allDataObj.currency}}</p>
+            </div>
+            <div *ngIf="allDataObj.taxes" class="data-container">
+                <label>VAT Amounts</label>
+                <p>{{(allDataObj.subTotal * allDataObj.taxRate) | mycurrency:allDataObj.currency}}</p>
+            </div>
+            <div class="data-container">
+                <label>Total Amounts</label>
+                <p>{{allDataObj.totalAmounts | mycurrency:allDataObj.currency}}</p>
+            </div>
+            <div class="data-container">
+                <label>Paid Amounts</label>
+                <p>{{allDataObj.paidAmounts | mycurrency:allDataObj.currency}}</p>
+            </div>
+            <div class="data-container">
+                <label>Due Amounts</label>
+                <p>{{allDataObj.dueAmounts | mycurrency:allDataObj.currency}}</p>
+            </div>
+        </div>
+
+        <div class="table-container container-full-width">
+
+            <div class="top-header-padding">
+                <h1><strong>Invoice Items</strong></h1>
+            </div>
+
+            <table mat-table [dataSource]="itemsDataSource" class="uk-table">
+        
+                <!-- id Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let item; let i=index">{{i+1}}</td>
+                </ng-container>
+        
+                <!-- creation date Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let item">{{ item.itemName}}</td>
+                </ng-container>
+        
+                <!-- client column -->
+                <ng-container matColumnDef="comments">
+                    <th mat-header-cell *matHeaderCellDef>Comments</th>
+                    <td mat-cell *matCellDef="let item">{{item.itemDescription}}</td>
+                </ng-container>
+        
+                <!-- project column -->
+                <ng-container matColumnDef="unitPrice">
+                    <th mat-header-cell *matHeaderCellDef>Unit Price</th>
+                    <td mat-cell *matCellDef="let item">{{item.unitPrice | mycurrency:allDataObj.currency}}</td>
+                </ng-container>
+
+                <!-- total column -->
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                    <td mat-cell *matCellDef="let item">{{item.quantity}}</td>
+                </ng-container>
+        
+                <!-- status column -->
+                <ng-container matColumnDef="total">
+                    <th mat-header-cell *matHeaderCellDef>Total Price</th>
+                    <td mat-cell *matCellDef="let item">{{item.totalPrice | mycurrency:allDataObj.currency}}</td>
+                </ng-container>
+        
+        
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+        
+            </table>
+        </div>
+    </div>
+    
+
+</div>

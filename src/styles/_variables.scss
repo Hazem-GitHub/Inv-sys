@@ -1,0 +1,19 @@
+$app-primary-color: #731991;
+$app-secondary-color: #ffffff;
+$very-light-gray-color: #dfdfdf;
+$light-gray-color: #cfcfcf;
+$dark-gray-color: #404040;
+$warning-red-color: #FB0055;
+$orange-color: #FFD427;
+$green-color: #1AE1A4;
+$black-color: #333333;
+
+$app-font-size: 12px;
+$app-font-family: 'Montserrat', sans-serif;
+
+
+
+@function clr($base, $shade: base) {
+    $color: map-get(map-get($colors, $base), $shade);
+    @return $color;
+}

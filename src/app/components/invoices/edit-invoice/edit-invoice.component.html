@@ -1,0 +1,524 @@
+<div class="add-btn-padding" uk-margin>
+    <button mat-flat-button color="primary" routerLink="/invoices/new">
+        <i class="fas fa-plus"></i> Add New Invoice
+    </button>
+</div>
+
+
+<div class="details-container container-full-width">
+    <div class="uk-margin">
+        <h2>
+            <strong>Invoice ID #{{invoiceId}}</strong>
+        </h2>
+    </div>
+
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div id="invoice-data-container">
+    
+        <!-- <div class="top-header-padding uk-flex uk-flex-between">
+            <h3><strong>Create New Invoice</strong></h3>
+            <button routerLink="/invoices" mat-button color="basic">
+                <mat-icon aria-hidden="false" aria-label="Discard">arrow_back</mat-icon>
+                 Back to list
+            </button>
+        </div> -->
+        <!-- <hr/> -->
+        <!-- <div class="loading-container">
+            <div class="uk-align-center spinnerContainer">
+                <div uk-spinner></div>
+            </div>
+        </div> -->
+        
+        <div class="data-container uk-flex uk-flex-left">
+            
+            <div class="uk-width-full">
+                
+                <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "editInvoiceForm" (ngSubmit)="onSubmitHandler()">
+                    <mat-vertical-stepper [linear]="false" #stepper>
+                        <mat-step>
+                            <ng-template matStepLabel><strong>Details</strong></ng-template>
+                            <div id="invoice-details-wrapper">
+                                <hr>
+                                <!-- value: {{ editInvoiceForm.value | json }}
+                                Form Status: {{ editInvoiceForm.status }} -->
+                                <!-- <hr/> -->
+                                
+                                <!-- <div class="uk-margin">
+                                    <label class="uk-form-label" for="mat-input-0">Creation Date</label>
+                                    <div class="uk-form-controls">
+                                        <mat-form-field floatLabel="auto" appearance="standard">
+                                            <mat-label>Creation Date</mat-label>
+                                            <input formControlName="creationDate" matInput [matDatepicker]="creationDP" [(ngModel)]="currentDate" disabled
+                                                (dateInput)="addDatepickerEvent('input', $event)" (dateChange)="addDatepickerEvent('change', $event)">
+                                            <mat-datepicker-toggle matPrefix [for]="creationDP"></mat-datepicker-toggle>
+                                            <mat-datepicker #creationDP></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+            
+                                    
+                                </div> -->
+                                <!-- <div class="top-header-padding">
+                                    <h3><strong>Invoice ID:</strong> {{invoiceId}}</h3>
+                                </div> -->
+                                
+                                <div class="fieldWrapper">
+                                    <div class="uk-margin">
+                                        <label *ngIf="!editInvoiceForm.controls.dueDate.invalid" class="uk-form-label" for="mat-input-0">Due Date</label>
+                                        <label *ngIf="editInvoiceForm.controls.dueDate.invalid" matBadge="!" MatBadgeSize="small" matBadgeColor="warn" matBadgePosition="after" matBadgeOverlap="false" class="uk-form-label" for="mat-input-0">Due Date</label>
+                                        <!-- <label class="uk-form-label" for="mat-input-0">Due Date</label> -->
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Due Date</mat-label>
+                                                <!-- <input matInput placeholder="Pick invoice due date" formControlName="dueDate"  [matDatepicker]="dueDP" [min]='currentDate'
+                                                    (dateInput)="addDatepickerEvent('input', $event)" (dateChange)="addDatepickerEvent('change', $event)"> -->
+                                                <input matInput placeholder="Pick invoice due date" formControlName="dueDate"  [matDatepicker]="dueDP" [min]="currentDate" (click)="dueDP.open()">
+                                                <mat-error *ngIf="editInvoiceForm.controls.dueDate.invalid">Expired date</mat-error>
+                                                <mat-datepicker-toggle matPrefix [for]="dueDP"></mat-datepicker-toggle>
+                                                <mat-datepicker #dueDP></mat-datepicker>
+                                                <mat-hint align="start">When it should be collected</mat-hint>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="mat-select-3">Status <mat-progress-bar *ngIf="!statusList" mode="indeterminate" matSuffix></mat-progress-bar></label>
+                                        <div class="uk-form-controls">
+                                            
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Select status</mat-label>
+                                                <mat-select formControlName="status">
+                                                    <mat-option>Select status</mat-option>
+                                                    <mat-option *ngFor="let status of statusList" [value]="status.StatusId">
+                                                        <i class="fas fa-file-invoice-dollar status-color-{{status.StatusId}}"></i>
+                                                        {{status.Statu}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                
+                                                <i *ngIf="selectedStatusId" class="fas fa-file-invoice-dollar status-color-{{ this.selectedStatusId }} uk-margin-small-right uk-margin-remove-top" matPrefix></i>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="fieldWrapper">
+                                    <div class="uk-margin client-list-container">
+                                        <label class="uk-form-label" for="mat-select-0">Client Name <mat-progress-bar *ngIf="!clientsList" mode="indeterminate" matSuffix></mat-progress-bar></label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Select a client</mat-label>
+                                                <mat-select name="ClientList" formControlName="client">
+                                                    <mat-option>Select a client</mat-option>
+                                                    <mat-option *ngFor="let client of clientsList" [value]="client.ClientId">
+                                                        {{client.Name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <!-- <mat-hint align="start">Select a Client / Create New Client</mat-hint> -->
+                                            </mat-form-field>
+                                            <button mat-raised-button type="button" [attr.aria-label]="'Create New Client'" routerLink="/clients/new">
+                                                <i class="fas fa-plus"></i>
+                                                New Client
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="mat-select-1">Payment method</label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Select a payment method</mat-label>
+                                                <mat-select formControlName="paymentMethod">
+                                                    <mat-option>Select payment method</mat-option>
+                                                    <mat-option [value]="1">
+                                                        Cash
+                                                    </mat-option>
+                                                    <mat-option [value]="2">
+                                                        Bank Transfer
+                                                    </mat-option>
+                                                    <mat-option [value]="3">
+                                                        Cheque
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+
+                                <div class="fieldWrapper">
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="mat-input-1">Project Name</label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Project Name</mat-label>
+                                                <input matInput placeholder="Project name" type="text" formControlName="projectName" #projectName/>
+                                                <mat-hint align="end">{{projectName.value.length}} / 50</mat-hint>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label class="uk-form-label" for="mat-input-2">Project Description</label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline" controlType="optional">
+                                                <mat-label>Project Description (Optional)</mat-label>
+                                                <textarea placeholder="Write a descrioption" matInput rows="1" formControlName="projectDescription" #projectDescription></textarea>
+                                                <mat-hint align="end">{{projectDescription.value.length}} / 500</mat-hint>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="fieldWrapper">
+                                    <div class="uk-margin currency-list-container">
+                                        <label class="uk-form-label" for="mat-select-2">Currency <mat-progress-bar *ngIf="!currencyList" mode="indeterminate" matSuffix></mat-progress-bar></label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Select a Currency</mat-label>
+                                                <mat-select formControlName="currency">
+                                                    <mat-option> Select currency</mat-option>
+                                                    <mat-option *ngFor="let currency of currencyList" [value]="currency.CurrencyId">
+                                                        {{currency.Name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-hint align="start">For all items</mat-hint>
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <label *ngIf="!editInvoiceForm.controls.paidAmount.invalid" class="uk-form-label" for="mat-input-1">Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></label>
+                                        <label *ngIf="editInvoiceForm.controls.paidAmount.invalid" matBadge="!" MatBadgeSize="small" matBadgeColor="warn" matBadgePosition="after" matBadgeOverlap="false" class="uk-form-label" for="mat-input-1">Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></label>
+                                        <!-- <label class="uk-form-label" for="mat-input-1">Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></label> -->
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                <mat-label>Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></mat-label>
+                                                <input matInput placeholder="Paid Amounts" type="number" #paidAmounts formControlName="paidAmount"/>
+                                                <mat-error *ngIf="editInvoiceForm.controls.paidAmount.invalid">Invalid value</mat-error>
+                                                <mat-hint align="end">Maximum ( {{totalAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <mat-hint align="start">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <span *ngIf="currentCurrencyValue" class="uk-margin-small-right uk-margin-remove-top" matPrefix>{{ currentCurrencyValue }}</span>
+                                            </mat-form-field>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+
+                                <div class="fieldWrapper">
+                                    
+                                    
+                                    <div class="uk-margin-medium">
+                                        <label class="uk-form-label" for="mat-select-3">Apply VAT?</label>
+                                        <div class="uk-form-controls">
+                                            <mat-radio-group color="primary" formControlName="taxes">
+                                                <div uk-margin>
+                                                    <span class="uk-margin-large-right">
+                                                        <mat-radio-button labelPosition="before" [value]="true">Yes</mat-radio-button>
+                                                    </span>
+                                                    <span>
+                                                        <mat-radio-button labelPosition="before" [value]="false">No</mat-radio-button>
+                                                    </span>
+                                                </div>
+                                            </mat-radio-group>
+                                            <!-- <mat-form-field floatLabel="auto" appearance="legacy">
+                                                <mat-label>Apply Taxes?</mat-label>
+                                                <mat-select formControlName="taxes" [(ngModel)]="isTaxed">
+                                                    <mat-option value="true">Yes</mat-option>
+                                                    <mat-option value="false">No</mat-option>
+                                                </mat-select>
+                                            </mat-form-field> -->
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin" *ngIf="isTaxed">
+                                        <label class="uk-form-label" for="mat-select-3">VAT Rate <mat-progress-bar *ngIf="!taxRateList" mode="indeterminate" matSuffix></mat-progress-bar></label>
+                                        <div class="uk-form-controls">
+                                            <mat-form-field floatLabel="never" appearance="outline">
+                                                <mat-label>Select a VAT Rate</mat-label>
+                                                <mat-select formControlName="taxRate" [disabled]="!isTaxed">
+                                                    <mat-option *ngFor="let taxRate of taxRateList" [value]="taxRate.TaxId">
+                                                        {{ taxRate.TaxRate }}%
+                                                    </mat-option>
+                                                </mat-select>
+                                                <!-- <mat-hint align="start">Select VAT Rate / Create New VAT Rate</mat-hint> -->
+                                            </mat-form-field>
+                                            <button mat-raised-button type="button" [attr.aria-label]="'Create New VAT Rate'" routerLink="/settings/vat/new">
+                                                <i class="fas fa-plus"></i>
+                                                New VAT Rate
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </mat-step>
+                        <mat-step>
+                            <ng-template matStepLabel><strong>Items</strong></ng-template>
+                            <div id="invoice-items-wrapper">
+                                <hr>
+                                <!-- value: {{ editInvoiceForm.value | json }} -->
+                                <!-- <div *ngIf="invoiceItemsForms.length > 0" formArrayName="invoiceItems">
+                                    <mat-list role="list" *ngFor="let item of invoiceItemsForms.controls; let i=index" [formGroupName]="i">
+                                        <mat-list-item role="listitem">
+                                            <mat-form-field class="uk-margin-large-right" floatLabel="auto" appearance="standard">
+                                                <mat-label>Name</mat-label>
+                                                <input matInput placeholder="Item name" type="text" formControlName="itemName"/>
+                                            </mat-form-field>
+                                            <mat-form-field floatLabel="auto" appearance="standard">
+                                                <mat-label>Description</mat-label>
+                                                <textarea matInput placeholder="Write a description" rows="1" formControlName="itemDescription"></textarea>
+                                            </mat-form-field>
+                                            <mat-form-field floatLabel="auto" appearance="standard">
+                                                <mat-label>Unit price</mat-label>
+                                                <input matInput placeholder="Unit price" type="text" formControlName="unitPrice"/>
+                                            </mat-form-field>
+                                            <mat-form-field floatLabel="auto" appearance="standard">
+                                                <mat-label>Quantity</mat-label>
+                                                <input matInput placeholder="Quantity" type="number" [min]="1" formControlName="quantity"/>
+                                            </mat-form-field>
+                                            <button mat-raised-button type="button" color="warn" (click)="removeInvoiceItem(i)"><i class="fas fa-times"></i></button>
+                                        </mat-list-item>
+                                    </mat-list>
+                                </div> -->
+                                
+                                <div class="table-container container-full-width">
+                                    <div *ngIf="invoiceItemsForms.controls.length > 0" formArrayName="invoiceItems">
+                                        <!-- <table mat-table [dataSource]="invoiceItemsDataSource" class="mat-elevation-z8">
+    
+                                            <ng-container matColumnDef="index">
+                                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-margin-remove">
+                                                        <label>{{ element.id || '-' }}</label>
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                          
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                        <div class="uk-form-controls uk-margin-remove">
+                                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                                <mat-label>Name</mat-label>
+                                                                <input matInput placeholder="Item name" type="text" value="{{ element.name }}" formControlName="itemName" #itemName/>
+                                                                <mat-hint align="end">{{itemName.value.length}} / 50</mat-hint>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                          
+                                            <ng-container matColumnDef="comments">
+                                                <th mat-header-cell *matHeaderCellDef> Comments </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                        <div class="uk-form-controls uk-margin-remove">
+                                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                                <mat-label>Comments (Optional)</mat-label>
+                                                                <textarea matInput placeholder="Comments (Optional)" rows="1" value="{{ element.itemDescription }}" formControlName="itemDescription" #itemDescription></textarea>
+                                                                <mat-hint align="end">{{itemDescription.value.length}} / 500</mat-hint>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                          
+                                            <ng-container matColumnDef="unitPrice">
+                                                <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                        <div class="uk-form-controls uk-margin-remove">
+                                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                                <mat-label>Unit price ({{ currentCurrencyValue }})</mat-label>
+                                                                <input matInput placeholder="Unit price ({{ currentCurrencyValue }})" type="number" value="{{ element.unitPrice }}" formControlName="unitPrice"/>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                            
+                                            <ng-container matColumnDef="quantity">
+                                                <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                        <div class="uk-form-controls uk-margin-remove">
+                                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                                                <mat-label>Quantity</mat-label>
+                                                                <input matInput placeholder="Quantity" type="number" value="{{ element.quantity }}" formControlName="quantity"/>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+    
+                                            <ng-container matColumnDef="actions">
+                                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                        <div class="uk-form-controls uk-margin-remove">
+                                                            <div *ngIf="element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                <button mat-flat-button type="button" color="warn" id="{{element.id}}" (click)="removeExistingInvoiceItem(i, element.id)"><i class="fas fa-times"></i></button>
+                                                            </div>
+                                                            <div *ngIf="!element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                <button mat-flat-button type="button" color="warn" (click)="removeInvoiceItem(i)"><i class="fas fa-times"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                            
+                                          
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table> -->
+                                        <div class="border-bottom-light uk-margin-remove uk-flex uk-flex-column@m uk-flex-row uk-flex-wrap uk-flex-wrap-stretch uk-flex-between uk-flex-middle"
+                                         *ngFor="let item of invoiceItemsForms.controls; let i=index" [formGroupName]="i">
+                                            <div class="uk-padding-small uk-margin-remove">
+                                                <label class="uk-form-label">No.</label>
+                                                <div>{{ i+1 }}</div>
+                                            </div>
+                                            
+                                            <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                <div class="uk-form-controls uk-margin-remove">
+                                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                                        <mat-label>Name</mat-label>
+                                                        <input matInput placeholder="Item name" type="text" formControlName="itemName" #itemName/>
+                                                        <mat-hint align="end">{{itemName.value.length}} / 50</mat-hint>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                <div class="uk-form-controls uk-margin-remove">
+                                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                                        <mat-label>Comments (Optional)</mat-label>
+                                                        <textarea matInput placeholder="Comments (Optional)" rows="1" formControlName="itemDescription" #itemDescription></textarea>
+                                                        <mat-hint align="end">{{itemDescription.value.length}} / 500</mat-hint>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                <div class="uk-form-controls uk-margin-remove">
+                                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                                        <mat-label>Unit price ({{ currentCurrencyValue }})</mat-label>
+                                                        <input matInput placeholder="Unit price ({{ currentCurrencyValue }})" type="number" #unitPrice formControlName="unitPrice"/>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                <div class="uk-form-controls uk-margin-remove">
+                                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                                        <mat-label>Quantity</mat-label>
+                                                        <input matInput placeholder="Quantity" type="number" #quantity formControlName="quantity"/>
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                <div class="uk-form-controls uk-margin-remove">
+                                                        <label class="uk-form-label">Total Price</label>
+                                                        <p>{{ unitPrice.value * quantity.value }}</p>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <div *ngIf="item.value.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                <button mat-flat-button type="button" color="warn" id="{{item.value.id}}" (click)="removeExistingInvoiceItem(i, item.value.id)"><i class="fas fa-times"></i></button>
+                                            </div>
+                                            <div *ngIf="!item.value.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                <button mat-flat-button type="button" color="warn" (click)="removeInvoiceItem(i)"><i class="fas fa-times"></i></button>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="btns-container uk-margin-bottom uk-margin-top">
+                                    <button mat-raised-button type="button" color="primary" (click)="addInvoiceItem()"><i class="fas fa-plus"></i> New Invoice Item</button>
+                                </div>
+
+                                
+            
+                            </div>
+                        </mat-step>
+                        
+                    </mat-vertical-stepper>
+                    <!-- <hr/>
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="mat-input-1">Paid Amounts <span matSuffix>( {{currentCurrencyValue}} )</span></label>
+                        <div class="uk-form-controls">
+                            <mat-form-field floatLabel="auto" appearance="outline">
+                                <mat-label>Paid Amounts <span matSuffix>( {{currentCurrencyValue}} )</span></mat-label>
+                                <input matInput placeholder="Paid Amounts" type="number" #paidAmounts formControlName="paidAmount"/>
+                                <mat-hint align="end">Total Amounts ( {{totalAmount | mycurrency:currentCurrencyValue}} )</mat-hint>
+                                <mat-hint align="start">Due Amounts ( {{dueAmount | mycurrency:currentCurrencyValue}} )</mat-hint>
+                                <span *ngIf="currentCurrencyValue" class="uk-margin-small-right uk-margin-small-bottom uk-margin-remove-top" matPrefix>{{ currentCurrencyValue }}</span>
+                            </mat-form-field>
+                        </div>
+                        
+                    </div> -->
+                    
+                    
+                
+                </form>
+                <!-- <div *ngIf="invoiceItemsForms.controls.length > 0" id="totalsSpinner" class="spinnerContainer uk-flex uk-flex-right">
+                    <div uk-spinner></div>
+                </div> -->
+                <!-- {{editInvoiceForm.controls.currency.value}} -->
+                <mat-progress-bar *ngIf="isCalculatingResults" id="totalsSpinner" class="spinnerContainer uk-flex uk-flex-right" mode="indeterminate"></mat-progress-bar>
+                <div *ngIf="currentCurrencyValue">
+                    
+                    <div *ngIf="isTaxed" class="uk-flex uk-flex-column uk-flex-bottom uk-padding-small">
+                        <h3><strong class="primary-text uk-margin-small-right">SubTotal Amounts</strong> <strong>{{ (subTotalAmount ? subTotalAmount : 0) | mycurrency : currentCurrencyValue }}</strong></h3>
+                        <!-- <h3><strong class="primary-text uk-margin-small-right">VAT ( {{ taxName }} ) </strong> <strong>{{ taxRateValue }}% </strong></h3> -->
+                        <h3><strong class="primary-text uk-margin-small-right">VAT Rate (%) </strong> <strong>{{ taxRateValue }}% </strong></h3>
+                        <h3><strong class="primary-text uk-margin-small-right">VAT Amounts</strong> <strong>{{ subTotalAmount * ( taxRateValue / 100 ) | mycurrency : currentCurrencyValue}}</strong></h3>
+                    </div>
+                    <div class="uk-flex uk-flex-column uk-flex-bottom uk-padding-small" [ngClass]="{ 'border-top-light': isTaxed }">
+                        <h3><strong class="primary-text uk-margin-small-right">Paid Amounts</strong> <strong> {{ (paidAmount ? paidAmount : 0) | mycurrency : currentCurrencyValue }}</strong></h3>
+                        <h3><strong class="primary-text uk-margin-small-right">Due Amounts</strong> <strong> {{ ( paidAmount ? dueAmount : totalAmount) | mycurrency : currentCurrencyValue }}</strong></h3>
+                    </div>
+                    <div class="uk-flex uk-flex-column uk-flex-bottom uk-padding-small" [ngClass]="{ 'border-top-light': isTaxed }">  
+                        <h3><strong class="primary-text uk-margin-small-right">Total Amounts</strong> <strong> {{ (totalAmount ? totalAmount : 0) | mycurrency : currentCurrencyValue }}</strong></h3>
+                    </div>
+                    
+                </div>
+                
+            </div>
+    
+            
+            
+        </div>
+        <hr/>
+        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-center">
+            <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!editInvoiceForm.valid || isSubmitting">
+                Save Changes <i class="far fa-save uk-margin-small-left"></i> 
+                <span *ngIf="isSubmitting" class="loading-container uk-margin-small-left">
+                    <span class="spinnerContainer">
+                        <span uk-spinner></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+        
+    </div>
+    
+
+
+</div>

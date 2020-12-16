@@ -1,0 +1,112 @@
+<div class="add-btn-padding">
+    <button mat-flat-button color="primary" routerLink="new">
+        <i class="fas fa-plus"></i> Add New Client
+    </button>
+</div>
+
+<div class="table-container container-full-width">
+    <div class="top-header-padding">
+        <h3><strong>Clients</strong></h3>
+    </div>
+    <!-- <div class="spinnerContainer">
+        <div uk-spinner></div>
+    </div>
+    <table *ngIf="clients?.length != 0" id="ClientsTable" class="uk-table" #dataTable> -->
+        
+        <!-- <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="clients?.length != 0">
+            <tr *ngFor="let client Of clients; let i = index;" [attr.data-clientId]='client.ClientId'>
+                <td>{{ client.ClientId }}</td>
+                <td>{{ client.ClientType }}</td>
+                <td>{{ client.Name }}</td>
+                <td>{{ client.Phone }}</td>
+                <td>{{ client.Email }}</td>
+                <td>
+                    <a class="uk-icon-button"><span uk-icon="icon: triangle-down; ratio: 1"></span></a>
+                    <div uk-dropdown uk-drop="mode: click">
+                        <ul class="uk-iconnav">
+                            <li><a routerLink="/clients/view/client.ClientId" [attr.data-invoiceId]='invoice.id' class='view-invoice-btn'><i class="far fa-eye"></i></a></li>
+                            <li><a routerLink="/clients/edit/client.ClientId" [attr.data-invoiceId]='invoice.id' class='edit-invoice-btn'><i class="far fa-edit"></i></a></li>
+                            <li><a routerLink="/clients/delete/client.ClientId" [attr.data-invoiceId]='invoice.id' class='delete-invoice-btn'><i class="far fa-trash-alt"></i></a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="clients?.length == 0">
+            <tr>
+              <td colspan="12" class="no-data-available">No clients available</td>
+            </tr>
+        <tbody> -->
+    <!-- </table> -->
+
+    <div class="search-box-container">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
+            <i class="fas fa-search" matSuffix></i>
+        </mat-form-field>
+    </div>
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="allDataArr?.length != 0" id="ExpensesTable" class="uk-table"  matSort matSortActive="ClientId" matSortDirection="desc">
+
+        <!--1 id Column -->
+        <ng-container matColumnDef="ClientId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let item">{{item.ClientId}}</td>
+        </ng-container>
+
+        <!--2 type column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let item">{{item.ClientType}}</td>
+        </ng-container>
+
+        <!--3 name column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let item">{{item.Name}}</td>
+        </ng-container>
+
+        <!--4 phone column -->
+        <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef>Phone</th>
+            <td mat-cell *matCellDef="let item">{{item.Phone}}</td>
+        </ng-container>
+
+        <!--5 email column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let item">{{item.Email}}</td>
+        </ng-container>
+
+
+        <!--8 actions column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let item">
+                <ul class="uk-iconnav">
+                    <li><button mat-raised-button routerLink="/clients/view/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}" class='view-client-btn uk-text-center'><i class="far fa-eye"></i></button></li>
+                    <li><button mat-raised-button routerLink="/clients/edit/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}"  class='edit-client-btn uk-text-center'><i class="far fa-edit"></i></button></li>
+                    <li><button mat-raised-button color="warn" (click)="openDeleteDialog(item.ClientId)" data-invoiceId="{{item.ClientId}}"  class='delete-client-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
+                </ul>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+
+    </table>
+    <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
+</div>
