@@ -117,7 +117,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
   oldItemsArr: InvoiceItem[];
   newItemsArr: InvoiceItem[];
 
-  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'actions'];
+  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'actions'];
   invoiceItemsDataSource: any;
 
   routerParamsObservable: any;

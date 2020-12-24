@@ -52,7 +52,7 @@
             </div>
 
             <div class="data-container">
-                <label>Total Amounts ({{allDataObj.currency}})</label>
+                <label>Total Amounts</label>
                 <p>{{allDataObj.TotalAmount | mycurrency:allDataObj.currency}}</p>
             </div>
 
@@ -86,7 +86,7 @@
         
                 <!-- unitPrice column -->
                 <ng-container matColumnDef="unitPrice">
-                    <th mat-header-cell *matHeaderCellDef>Unit Price ({{allDataObj.currency}})</th>
+                    <th mat-header-cell *matHeaderCellDef>Unit Price</th>
                     <td mat-cell *matCellDef="let item">{{item.unitPrice | mycurrency:allDataObj.currency}}</td>
                 </ng-container>
 
@@ -98,13 +98,13 @@
         
                 <!-- Vat Amounts column -->
                 <ng-container matColumnDef="vatAmounts">
-                    <th mat-header-cell *matHeaderCellDef>VAT Amounts ({{allDataObj.currency}})</th>
+                    <th mat-header-cell *matHeaderCellDef>VAT Amounts</th>
                     <td mat-cell *matCellDef="let item">{{item.vat | mycurrency:allDataObj.currency}}</td>
                 </ng-container>
 
                 <!-- Total Amounts column -->
                 <ng-container matColumnDef="total">
-                    <th mat-header-cell *matHeaderCellDef>Total Price ({{allDataObj.currency}})</th>
+                    <th mat-header-cell *matHeaderCellDef>Total Price</th>
                     <td mat-cell *matCellDef="let item">{{item.total | mycurrency:allDataObj.currency}}</td>
                 </ng-container>
         

@@ -23,6 +23,10 @@ body{
 .bold-font{
     font-weight: 700!important;
 }
+.bg-primary{
+    color: $app-secondary-color;
+    background-color: $app-primary-color;
+}
 .primary-text{
     color: $app-primary-color;
 }
@@ -359,9 +363,9 @@ table.uk-table {
                 font-weight: 700!important;
                 text-transform: capitalize!important;
                 font-size: 12px!important;
-                min-width: 150px;
+                min-width: 100px;
                 &:first-of-type{
-                    min-width: 50px;
+                    min-width: 30px;
                     text-align: center;
                 }
             }

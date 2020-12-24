@@ -82,7 +82,7 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
   oldItemsArr: ExpenseItem[];
   newItemsArr: ExpenseItem[];
 
-  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
+  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
   expenseItemsDataSource: any;
 
   routerParamsObservable: any;

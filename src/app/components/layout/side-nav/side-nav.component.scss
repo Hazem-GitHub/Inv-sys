@@ -30,7 +30,7 @@
     //     width:83px;
     // }
     .uk-nav{
-        padding: 20px 10px;
+        padding: 40px 5px;
         height: 100%;
         .uk-flex{
             // width: 100%;
@@ -42,24 +42,25 @@
     
     li.menu-item {
         padding: 0px;
-        margin-bottom:20px;
+        margin-bottom:30px;
         width:100%;
         & a.menu-link{
             // padding: 12px 16px;
             padding: 0;
-            width: 60px;
+            width: 68px;
             transition: all 0.1s ease-in;
             text-align: center;
             & i{
-                font-size: 24px;
-                color: $light-gray-color;
+                padding-top: 5px;
+                font-size: 20px;
+                color: $medium-gray-color;
                 transition: color 0.3s ease-out;
             }
             & span{
                 display: block;
                 font-size: 11px;
                 text-align: center;
-                color: $dark-gray-color;
+                color: $medium-gray-color;
                 font-weight: 500;
                 transition: opacity 0.1s ease-in;
                 // margin
