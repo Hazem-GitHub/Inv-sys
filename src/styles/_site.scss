@@ -245,6 +245,9 @@ label{
 
 .mat-vertical-content-container{
     margin-left: 24px!important;
+    &::before{
+        content: none!important;
+    }
 }
 .mat-vertical-content{
     padding-left: 0px!important;
