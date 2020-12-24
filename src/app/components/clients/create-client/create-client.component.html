@@ -2,7 +2,7 @@
     <div *ngIf="isLoadingResults">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-    <div id="client-data-container" class="container">
+    <div id="client-data-container" class="">
         
         <!-- <div class="btns-container container-full-width uk-flex uk-flex-between">
             <button routerLink="/client" mat-stroked-button color="basic">
@@ -16,19 +16,19 @@
                 <div uk-spinner></div>
             </div>
         </div> -->
-        <div class="data-container uk-flex uk-flex-left uk-margin-small-top">
+        <div class="data-container uk-flex uk-flex-left">
             
             <div class="uk-width-full">
     
                 <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "newClientForm" (ngSubmit)="onSubmitHandler()">
             
                     <div id="client-details-wrapper">
-                        <hr>
+                        <!-- <hr> -->
                         <div class="fieldWrapper">
                             <div class="uk-margin client-list-container">
                                 <label class="uk-form-label" for="mat-select-0">Type <mat-progress-bar *ngIf="!clientTypesList" mode="indeterminate" matSuffix></mat-progress-bar></label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>Select client type</mat-label>
                                         <mat-select name="ClientList" formControlName="typeId" [(ngModel)]="selectedType">
                                             <mat-option>Select type</mat-option>
@@ -43,7 +43,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label" for="mat-input-1">{{ selectedType === 1? 'Organization' : 'Client' }} Name</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>{{ selectedType === 1? 'Organization' : 'Client' }} name</mat-label>
                                         <input matInput placeholder="{{ selectedType === 1? 'Organization' : 'Client' }} name" type="text" formControlName="name" #clientName/>
                                         <mat-hint align="end">{{clientName.value.length}} / 50</mat-hint>
@@ -58,7 +58,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">E-mail</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>E-mail address</mat-label>
                                         <input matInput placeholder="E-mail address" type="text" formControlName="email"/>
                                     </mat-form-field>
@@ -67,7 +67,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">Phone</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>Phone number</mat-label>
                                         <input matInput placeholder="Phone number" type="text" formControlName="phone"/>
                                     </mat-form-field>
@@ -80,7 +80,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">Address</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>Address</mat-label>
                                         <input matInput placeholder="Address" type="text" formControlName="address" #address/>
                                         <mat-hint align="end">{{address.value.length}} / 200</mat-hint>
@@ -91,7 +91,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">Fax</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>Fax number</mat-label>
                                         <input matInput placeholder="Fax number" type="text" formControlName="fax"/>
                                     </mat-form-field>
@@ -105,7 +105,7 @@
                             <div class="uk-margin">
                                 <label class="uk-form-label">Website</label>
                                 <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="outline">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>Website URL</mat-label>
                                         <input matInput placeholder="eg. www.example.com" type="text" formControlName="website" #website/>
                                         <mat-hint align="end">{{website.value.length}} / 200</mat-hint>
