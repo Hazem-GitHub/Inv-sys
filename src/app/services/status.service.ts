@@ -11,7 +11,7 @@ export class StatusService {
   constructor(private http: HttpClient) { }
 
   getStatus( ): Observable<any> {
-    const endpoint: string = `http://invoices.5d-agency.com/service1.svc/GetStatu?`;
+    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/GetStatu?`;
     return this.http.get<any>(endpoint);
   }
 }
