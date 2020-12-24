@@ -47,7 +47,7 @@
                                     <div class="uk-margin">
                                         <label class="uk-form-label" for="mat-select-1">Category <mat-progress-bar *ngIf="!ExpensesTypesList" mode="indeterminate" matSuffix></mat-progress-bar></label>
                                         <div class="uk-form-controls">
-                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                            <mat-form-field floatLabel="auto" appearance="fill">
                                                 <mat-label>Select a category</mat-label>
                                                 <!-- <mat-select formControlName="type">
                                                     <mat-option>Select Expense Type</mat-option>
@@ -82,7 +82,7 @@
                                     <div class="uk-margin client-list-container">
                                         <label class="uk-form-label" for="mat-select-0">Client <mat-progress-bar *ngIf="!clientsList" mode="indeterminate" matSuffix></mat-progress-bar></label>
                                         <div class="uk-form-controls">
-                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                            <mat-form-field floatLabel="auto" appearance="fill">
                                                 <mat-label>Select a client</mat-label>
                                                 <mat-select name="ClientList" formControlName="client">
                                                     <mat-option>Select a client</mat-option>
@@ -101,7 +101,7 @@
                                     <div *ngIf="currentCurrencyValue" class="uk-margin currency-list-container">
                                         <label class="uk-form-label" for="mat-select-2">Currency <mat-progress-bar *ngIf="!currencyList" mode="indeterminate" matSuffix></mat-progress-bar></label>
                                         <div class="uk-form-controls">
-                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                            <mat-form-field floatLabel="auto" appearance="fill">
                                                 <mat-label>Select a currency</mat-label>
                                                 <mat-select formControlName="currency">
                                                     <mat-option>Select a currency</mat-option>
@@ -119,7 +119,7 @@
                                     <div class="uk-margin">
                                         <label class="uk-form-label" for="mat-input-2">Description (Optional)</label>
                                         <div class="uk-form-controls">
-                                            <mat-form-field floatLabel="auto" appearance="outline">
+                                            <mat-form-field floatLabel="auto" appearance="fill">
                                                 <mat-label>Description (Optional)</mat-label>
                                                 <textarea placeholder="Description" matInput rows="3" formControlName="expenseDescription" #expenseDescription></textarea>
                                                 <mat-hint align="end">{{expenseDescription.value.length}} / 500</mat-hint>
