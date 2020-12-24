@@ -55,7 +55,8 @@
 
         <div class="uk-navbar-left uk-margin-small-left">
             <button mat-icon-button color="{{ isNavOpened ? 'basic' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
-                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-chevron-right' }} fa-bars"></i>
+                <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
+                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-bars' }} uk-margin-small-horizontal"></i>
             </button>
             <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i>  {{ pageTitle }}</span>
 

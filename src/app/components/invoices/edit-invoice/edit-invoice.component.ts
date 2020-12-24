@@ -1,7 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
-
-
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -120,7 +117,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
   oldItemsArr: InvoiceItem[];
   newItemsArr: InvoiceItem[];
 
-  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'actions'];
+  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'actions'];
   invoiceItemsDataSource: any;
 
   routerParamsObservable: any;
@@ -170,14 +167,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       this.invoiceId = Number(params.get('id'));
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading Invoice ID, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
     });
@@ -239,14 +229,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading Invoice data, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       this.editInvoiceForm.controls.dueDate.setValue(new Date(this.allDataObj.DueDate));
@@ -276,14 +259,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
         this.taxName = data.ViewTaxResult[0].TaxName;
         }, err => {
           // on error
-          this.showNotification(
-            15000,
-            `Error on reading VAT data, $(err)`,
-            ``,
-            `none`,
-            true,
-            ''
-          );
+          console.log(err);
         }, () => {
           // on complete
           if ( this.editInvoiceForm.value.taxes ) {
@@ -301,14 +277,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
             this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
           }, err => {
             // on error
-            this.showNotification(
-              15000,
-              `Error on Currency data, $(err)`,
-              ``,
-              `none`,
-              true,
-              ''
-            );
+            console.log(err);
           }, () => {
             // on complete
             // $('.loading-container .spinnerContainer').hide();
@@ -334,14 +303,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
         this.taxName = data.ViewTaxResult[0].TaxName;
         }, err => {
           // on error
-          this.showNotification(
-            15000,
-            `Error on reading VAT data, $(err)`,
-            ``,
-            `none`,
-            true,
-            ''
-          );
+          console.log(err);
         }, () => {
           // on complete
           if ( this.editInvoiceForm.value.taxes ) {
@@ -362,40 +324,28 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
           // in order to take effect
           this.editInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
           this.editInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
-
-          this.currencyObservable = this.currencyService.getCurrency(this.editInvoiceForm.value.currency).subscribe(data => {
-            this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
-          }, err => {
-            // on error
-            this.showNotification(
-              15000,
-              `Error on reading Currency data, $(err)`,
-              ``,
-              `none`,
-              true,
-              ''
-            );
-          }, () => {
-            // on complete
-            // $('.loading-container .spinnerContainer').hide();
-            this.isCalculatingResults = false;
-            // Hide loader
-            this.isLoadingResults = false;
-            this.currencyObservable.unsubscribe();
-          });
+          if (this.editInvoiceForm.value.currency) {
+            this.currencyObservable = this.currencyService.getCurrency(this.editInvoiceForm.value.currency).subscribe(data => {
+              this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
+            }, err => {
+              // on error
+              console.log(err);
+            }, () => {
+              // on complete
+              // $('.loading-container .spinnerContainer').hide();
+              this.isCalculatingResults = false;
+              // Hide loader
+              this.isLoadingResults = false;
+              this.currencyObservable.unsubscribe();
+            });
+          }
+          
           this.taxRateObservable.unsubscribe();
         });
       }
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading form data changes, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       this.valueChangesOnInitObservable.unsubscribe();
@@ -419,14 +369,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       this.clientsList = data.GetClientResult;
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading Clients list, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -447,14 +390,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       // this.defaultCurrencyId = this.defaultCurrencyArrayElement[0].CurrencyId;
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading Currency list, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -469,14 +405,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       this.statusList = data.GetStatuResult;
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading Status list, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -497,14 +426,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       // this.defaultTaxRateId = this.defaultTaxRateArrayElement[0].TaxId;
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading VAT rates list, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -564,14 +486,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       this.taxName = data.ViewTaxResult[0].TaxName;
     }, err => {
       // on error
-      this.showNotification(
-        15000,
-        `Error on reading VAT data while submitting, $(err)`,
-        ``,
-        `none`,
-        true,
-        ''
-      );
+      console.log(err);
     }, () => {
       // on complete
       // 5. calculate Totals: (if NOT taxed) => total = subtotal; OR (if taxed) => total = (1 + (tax percentage value / 100)) * subtotal;
@@ -596,14 +511,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
         // console.log(data.EditInvoiceResult);
       }, err => {
         // on error
-        this.showNotification(
-          15000,
-          `Error on editing Invoice ${this.invoiceId}, $(err)`,
-          ``,
-          `none`,
-          true,
-          ''
-        );
+        console.log(err);
       }, () => {
         // on complete
         // $('.loading-container .spinnerContainer').hide();
@@ -630,14 +538,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
               // console.log('Edited invoice item result', result);
             }, err => {
               // on error
-              this.showNotification(
-                15000,
-                `Error on editing Invoice Item, $(err)`,
-                ``,
-                `none`,
-                true,
-                ''
-              );
+              console.log(err);
             }, () => {
               // on complete
               // $('.loading-container .spinnerContainer').hide();
@@ -654,14 +555,7 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
               // console.log('created invoice item result', result);
             }, err => {
               // on error
-              this.showNotification(
-                15000,
-                `Error on creating Invoice Item, $(err)`,
-                ``,
-                `none`,
-                true,
-                ''
-              );
+              console.log(err);
             }, () => {
               // on complete
               // $('.loading-container .spinnerContainer').hide();

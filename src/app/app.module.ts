@@ -41,6 +41,10 @@ import {MycurrencyPipe} from './pipes/custom.currency.pipe';
 import { EditClientComponent } from './components/clients/edit-client/edit-client.component';
 import { DeleteDialogComponent } from './components/utils/delete-dialog/delete-dialog.component';
 import { CustomSnackbarComponent } from './components/utils/custom-snackbar/custom-snackbar.component';
+import { ViewExpenseComponent } from './components/expenses/view-expense/view-expense.component';
+import { ViewClientComponent } from './components/clients/view-client/view-client.component';
+import { CurrencyComponent } from './components/settings/currency/currency.component';
+import { TaxesComponent } from './components/settings/taxes/taxes.component';
 
 
 
@@ -68,7 +72,11 @@ import { CustomSnackbarComponent } from './components/utils/custom-snackbar/cust
     EditExpenseComponent,
     EditClientComponent,
     DeleteDialogComponent,
-    CustomSnackbarComponent
+    CustomSnackbarComponent,
+    ViewExpenseComponent,
+    ViewClientComponent,
+    CurrencyComponent,
+    TaxesComponent
   ],
   imports: [
     BrowserModule,

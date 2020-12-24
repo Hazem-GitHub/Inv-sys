@@ -1,0 +1,70 @@
+<div *ngIf="!isLoadingResults" class="add-btn-padding uk-flex uk-flex-left@s uk-flex-between" uk-margin>
+    <button mat-flat-button color="primary" class="uk-margin-small-right" routerLink="/clients/edit/{{allDataObj.ClientId}}">
+        <i class="fas fa-edit"></i> Edit
+    </button>
+    <button mat-stroked-button color="basic" class="uk-margin-small-right" routerLink="/clients/new">
+        Create New Client
+    </button>
+</div>
+
+
+<div class="details-container container-full-width">
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div *ngIf="!isLoadingResults">
+
+        <div class="top-header-padding">
+            <h2><strong>Details</strong></h2>
+        </div>
+        <!-- <div class="top-header-padding">
+            <h2><strong>Expense ID {{allDataObj.id}}</strong></h2>
+        </div> -->
+        <div class="data-wrapper">
+            <div class="data-container">
+                <label>ID</label>
+                <p>{{allDataObj.ClientId}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Type</label>
+                <p>{{allDataObj.ClientType}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Name</label>
+                <p>{{allDataObj.Name}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Email</label>
+                <p>{{allDataObj.Email}}</p>
+            </div>
+            
+            <div class="data-container">
+                <label>Phone</label>
+                <p>{{allDataObj.Phone}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Fax</label>
+                <p>{{allDataObj.Fax}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Website</label>
+                <p>{{allDataObj.Website}}</p>
+            </div>
+
+            <div class="data-container">
+                <label>Address</label>
+                <p>{{allDataObj.Address}}</p>
+            </div>
+            
+
+        </div>
+
+    </div>
+    
+
+</div>

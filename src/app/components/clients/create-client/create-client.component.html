@@ -128,7 +128,7 @@
             
         </div>
         <hr/>
-        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-center">
+        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-start">
             <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!newClientForm.valid || isSubmitting">
                 Proceed client <i class="fas fa-arrow-right uk-margin-small-left"></i> 
                 <span *ngIf="isSubmitting" class="loading-container uk-margin-small-left">

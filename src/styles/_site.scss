@@ -226,14 +226,20 @@ label{
 }
 
 .mat-step-header{
+    border-radius: 25px;
     &[ng-reflect-selected=true]{
-        background-color: rgba($very-light-gray-color, 0.3);
-        border: 1px solid rgba($very-light-gray-color, 0.1);
+        background-color: rgba($very-light-gray-color, 0.2);
+        border: 1px solid rgba($very-light-gray-color, 0);
+        box-shadow: 1px 2px 1px rgba($app-primary-color, 0.06);
     }
     &[ng-reflect-selected=false]{
-        background-color: rgba($very-light-gray-color, 0.2);
-        border: 1px solid rgba($very-light-gray-color, 0.1);
+        background-color: rgba($very-light-gray-color, 0.1);
+        border: 1px solid rgba($very-light-gray-color, 0);
+        box-shadow: 2px 4px 5px rgba($app-primary-color, 0.06);
     }
+}
+.mat-step-label{
+    font-size: 1.2rem;
 }
 
 
@@ -404,4 +410,20 @@ table.uk-table {
     margin-bottom: 10px;
     display: inline-block;
 }
+.mat-badge-medium.mat-badge-after .mat-badge-content{
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    // font-size: 20px;
+    font-style: italic;
+}
+
+table.mat-table{
+    width: 100%;
+    &.padding-table{
+        th.mat-header-cell, td.mat-cell, td.mat-footer-cell{
+            padding-right: 1rem;
+        }
+    }
+}
+
 

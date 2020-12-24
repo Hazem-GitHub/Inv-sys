@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 /*Router */
 import { Router } from '@angular/router';
 
-
+import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -115,31 +115,33 @@ export class CreateClientComponent implements OnInit {
       console.log(err);
     }, () => {
       // on complete
-      // $('.loading-container .spinnerContainer').hide();
-      // loop through items
-      setTimeout( () => {
-        this.isSubmitting = false;
-      }, 1000);
-      setTimeout( () => {
-        this.showNotification(`New client with ID number ${ this.createdClientId } has been created successfully`, `Review client`);
-      }, 1000);
+      this.isSubmitting = false;
+      this.showNotification(
+        15000,
+        `New Client with ID # ${ this.createdClientId } has been Created successfully`,
+        `Review client`, `/clients/view/${this.createdClientId}`,
+        true,
+        'primary'
+      );
     });
 
   }
 
    /* Helper functions */
 
-   showNotification(message: string, action: string): void {
-    const snackBarRef = this.snackBar.open(message, action, {
-      duration: 6000
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
-    // const snackBarRef = this.snackBar.open(message, action);
-    snackBarRef.onAction().subscribe(() => {
-      this.router.navigateByUrl(`/clients/view/${this.createdClientId}`);
-    });
-    // snackBarRef.afterDismissed().subscribe(() => {
-    //   this.router.navigateByUrl(`/invoices`);
-    // });
   }
 
 }

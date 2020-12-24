@@ -20,4 +20,8 @@ export class TaxRateService {
     return this.http.get<any>(endpoint);
   }
 
+  editTaxRate( tax: any ): Observable<any> {
+    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/EditTax?TaxId=${tax.taxId}&TaxName=${tax.taxName}&TaxRate=${tax.taxRate}&SetAsDefault=${tax.setAsDefault}`;
+    return this.http.get<any>(endpoint);
+  }
 }

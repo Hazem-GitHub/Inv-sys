@@ -25,6 +25,8 @@ import { PercentPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+/* Datatable */
+import { MatTableDataSource } from '@angular/material/table';
 
 /* Components */
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -79,6 +81,9 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
 
   oldItemsArr: ExpenseItem[];
   newItemsArr: ExpenseItem[];
+
+  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
+  expenseItemsDataSource: any;
 
   routerParamsObservable: any;
 
@@ -373,7 +378,7 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
       this.showNotification(
         15000,
         `Expense with ID # ${ this.expenseId } has been Edited successfully`,
-        `Review expense`, `/invoices/view/${this.expenseId}`,
+        `Review expense`, `/expenses/view/${this.expenseId}`,
         true,
         'primary'
       );
@@ -402,6 +407,8 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
       vat: [item.vat, Validators.min(0)]
     });
     this.expenseItemsForms.push(expenseItem);
+    console.log(this.editExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.editExpenseForm.value.expenseItems);
   }
 
   /* Add Expense Items on Click Add item button */
@@ -414,6 +421,8 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
       vat: [0, Validators.min(0)]
     });
     this.expenseItemsForms.push(expenseItem);
+    console.log(this.editExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.editExpenseForm.value.expenseItems);
   }
 
 
@@ -424,12 +433,16 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
     this.deleteDialogRef.afterClosed().subscribe(result => {
       if ( result ) {
         this.expenseItemsForms.removeAt(i);
+        console.log(this.editExpenseForm.value.expenseItems);
+      this.expenseItemsDataSource = new MatTableDataSource(this.editExpenseForm.value.expenseItems);
       }
     });
   }
   /* Remove Existing Expense Items on Click Remove item button */
   removeExpenseItem(i: number): void {
     this.expenseItemsForms.removeAt(i);
+    console.log(this.editExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.editExpenseForm.value.expenseItems);
   }
 
 

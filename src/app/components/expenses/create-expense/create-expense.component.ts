@@ -18,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 
+/* Datatable */
+import { MatTableDataSource } from '@angular/material/table';
 
 
 /*DECLARE $ for jquery */
@@ -62,6 +64,9 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
 
   expenseItemsArr: any[];
   createdExpenseId: number;
+
+  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
+  expenseItemsDataSource: any;
 
   clientsListObservable: any;
   currencyListObservable: any;
@@ -264,7 +269,7 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
       this.showNotification(
         15000,
         `New Expense with ID # ${ this.createdExpenseId } has been Created successfully`,
-        `Review expense`, `/invoices/view/${this.createdExpenseId}`,
+        `Review expense`, `/expenses/view/${this.createdExpenseId}`,
         true,
         'primary'
       );
@@ -290,12 +295,16 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
       vat: [0, Validators.min(0)]
     });
     this.expenseItemsForms.push(expenseItem);
+    console.log(this.newExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.newExpenseForm.value.expenseItems);
   }
 
 
   /* Remove expense Items on Click Remove item button */
   removeExpenseItem(i): void {
     this.expenseItemsForms.removeAt(i);
+    console.log(this.newExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.newExpenseForm.value.expenseItems);
   }
 
   // Calculating SUBTOTAL from items

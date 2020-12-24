@@ -1,3 +1,4 @@
-<p>{{ data.message }}</p>
+<p *ngIf="data.route === 'none'" class="uk-text-center uk-margin-remove-bottom">{{ data.message }}</p>
+<p *ngIf="data.route !== 'none'">{{ data.message }}</p>
 <button *ngIf="data.route !== 'none'" mat-flat-button color="{{data.color}}" (click)="goToRoute()">{{ data.action }}</button>
-<button mat-button color="accent" (click)="dismissSnackbar()">close</button>
+<button *ngIf="data.isCloseBtn" mat-button color="accent" (click)="dismissSnackbar()">close</button>

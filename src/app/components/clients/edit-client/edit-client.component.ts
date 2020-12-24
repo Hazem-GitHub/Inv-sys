@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
-
+import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -115,17 +115,14 @@ export class EditClientComponent implements OnInit {
       this.editClientForm.controls.address.setValue(this.allDataObj.Address);
       this.editClientForm.controls.email.setValue(this.allDataObj.Email);
       this.editClientForm.controls.phone.setValue(this.allDataObj.Phone);
+      this.editClientForm.controls.fax.setValue(this.allDataObj.Fax);
       this.editClientForm.controls.website.setValue(this.allDataObj.Website);
       this.editClientForm.controls.typeId.setValue(this.allDataObj.ClientTypeId);
-      console.log(this.editClientForm.controls);
 
       clientDetailsObservable.unsubscribe();
     });
 
-
-    setTimeout( () => {
-      this.isLoadingResults = false;
-    }, 1000);
+    this.isLoadingResults = false;
   }
 
 
@@ -154,37 +151,40 @@ export class EditClientComponent implements OnInit {
     console.log(detailsObj);
 
     this.clientsService.editClient( detailsObj, this.clientId ).subscribe(data => {
-      this.clientId = data.CreateClientResult;
+      console.log(data);
+      // this.clientId = data.CreateClientResult;
     }, err => {
       // on error
       console.log(err);
     }, () => {
       // on complete
-      // $('.loading-container .spinnerContainer').hide();
-      // loop through items
-      setTimeout( () => {
-        this.isSubmitting = false;
-      }, 1000);
-      setTimeout( () => {
-        this.showNotification(`Client with ID number ${ this.clientId } has been Edited successfully`, `Review client`);
-      }, 1000);
+      this.isSubmitting = false;
+      this.showNotification(
+        15000,
+        `Client with ID # ${ this.clientId } has been Edited successfully`,
+        `Review client`, `/clients/view/${this.clientId}`,
+        true,
+        'primary'
+      );
     });
 
   }
 
    /* Helper functions */
 
-   showNotification(message: string, action: string): void {
-    const snackBarRef = this.snackBar.open(message, action, {
-      duration: 6000
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
-    // const snackBarRef = this.snackBar.open(message, action);
-    snackBarRef.onAction().subscribe(() => {
-      this.router.navigateByUrl(`/clients/view/${this.clientId}`);
-    });
-    // snackBarRef.afterDismissed().subscribe(() => {
-    //   this.router.navigateByUrl(`/invoices`);
-    // });
   }
 
 }

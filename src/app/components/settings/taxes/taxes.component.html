@@ -1,0 +1,78 @@
+<div class="table-container container-full-width uk-padding-remove-horizontal">
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    
+    <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "taxForm" (ngSubmit)="onSubmitHandler()">
+        <div formArrayName="taxItems">
+            <table mat-table [dataSource]="taxDataSource" class="mat-elevation-z0 padding-table uk-table">
+        
+
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let i=index" [formGroupName]="i">
+                        <div class="uk-padding-small uk-margin-remove">
+                            <label>{{ i + 1 }}</label>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="taxName">
+                    <th mat-header-cell *matHeaderCellDef> Tax Name </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <mat-form-field floatLabel="auto" appearance="fill">
+                            <mat-label> Tax Name </mat-label>
+                            <input matInput placeholder="Tax Name" type="text" value="{{ element.taxName }}" formControlName="taxName" #currencyName/>
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="taxRate">
+                    <th mat-header-cell *matHeaderCellDef> VAT Rate </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <mat-form-field floatLabel="auto" appearance="fill">
+                                    <mat-label> VAT Rate </mat-label>
+                                    <input matInput placeholder="VAT Rate" type="number" value="{{ element.taxRate }}" formControlName="taxRate" #egpValue/>
+                                    <span matSuffix>%</span>
+                                </mat-form-field>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="setAsDefault">
+                    <th mat-header-cell *matHeaderCellDef> Set as Default </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <mat-checkbox class="uk-margin" color="primary" [checked]="taxForm.value.taxItems[i].setAsDefault" (change)="setDefault(element.taxId)" formControlName="setAsDefault"></mat-checkbox>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+        </div>
+        
+    </form>
+
+    <hr/>
+        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-start">
+            <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!taxForm.valid || isSubmitting">
+                Save Changes <i class="far fa-save uk-margin-small-left"></i> 
+                <span *ngIf="isSubmitting" class="loading-container uk-margin-small-left">
+                    <span class="spinnerContainer">
+                        <span uk-spinner></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+
+</div>

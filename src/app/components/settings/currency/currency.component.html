@@ -1,0 +1,107 @@
+<div class="table-container container-full-width uk-padding-remove-horizontal">
+    <div *ngIf="isLoadingResults">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    
+    <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "currencyForm" (ngSubmit)="onSubmitHandler()">
+        <div formArrayName="currencyItems">
+            <table mat-table [dataSource]="currencyDataSource" class="mat-elevation-z0 padding-table uk-table">
+        
+
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let i=index" [formGroupName]="i">
+                        <div class="uk-padding-small uk-margin-remove">
+                            <label>{{ i + 1 }}</label>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="currency">
+                    <th mat-header-cell *matHeaderCellDef> Currency </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-margin-remove">
+                            <label>{{ allDataArr[i].Name ==="'EGP'" || allDataArr[i].Name ==="EGP" ? 'EGP (Default)' : allDataArr[i].Name}}</label>
+                        </div>
+                        <!-- <mat-form-field floatLabel="auto" appearance="fill">
+                            <mat-label> Currency </mat-label>
+                            <input matInput placeholder="Value in EGP" type="text" value="{{ element.Name }}" formControlName="name" #currencyName/>
+                        </mat-form-field> -->
+                    </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="egpValue">
+                    <th mat-header-cell *matHeaderCellDef> Value in EGP </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <mat-form-field floatLabel="auto" appearance="fill">
+                                    <mat-label> Value in EGP </mat-label>
+                                    <input matInput placeholder="Value in EGP" type="number" value="{{ element.ValueByEGP }}" formControlName="egpValue" #egpValue/>
+                                    <span matSuffix>EGP</span>
+                                </mat-form-field>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container>
+            
+                <!-- <ng-container matColumnDef="setAsDefault">
+                    <th mat-header-cell *matHeaderCellDef> Set as default </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <mat-checkbox class="uk-margin" color="primary" [checked]="element.Default" formControlName="setAsDefault"></mat-checkbox>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container> -->
+            
+                <ng-container matColumnDef="setAsDisabled">
+                    <th mat-header-cell *matHeaderCellDef> Disabled </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <mat-checkbox class="uk-margin" color="primary" [checked]="element.Disable" formControlName="setAsDisabled"></mat-checkbox>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                            <div class="uk-form-controls uk-margin-remove">
+                                <div class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                    <button id="{{ element.id }}" mat-raised-button type="button" color="basic" (click)="this.isEditable = !this.isEditable"><i class="fas fa-edit"></i></button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </td>
+                </ng-container> -->
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+        </div>
+        
+    </form>
+
+    <hr/>
+        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-start">
+            <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!currencyForm.valid || isSubmitting">
+                Save Changes <i class="far fa-save uk-margin-small-left"></i> 
+                <span *ngIf="isSubmitting" class="loading-container uk-margin-small-left">
+                    <span class="spinnerContainer">
+                        <span uk-spinner></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+
+</div>

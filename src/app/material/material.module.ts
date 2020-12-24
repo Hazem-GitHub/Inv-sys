@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -52,7 +53,8 @@ const MaterialComponents = [
   MatDialogModule,
   MatSidenavModule,
   MatGridListModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatTabsModule
 ];
 
 @NgModule({

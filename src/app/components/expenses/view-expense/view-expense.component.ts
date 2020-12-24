@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 /*Models */
-import { Invoice } from '../../../models/invoices/invoice.model';
+import { Expense } from '../../../models/expenses/expense.model';
 /*Services */
 import { PageTitleService } from '../../../services/page-title.service';
-import { InvoicesService } from '../../../services/invoices.service';
+import { ExpensesService } from '../../../services/expenses.service';
 
 /*Pipes */
 import { DatePipe } from '@angular/common';
@@ -25,21 +25,21 @@ import { MatTableDataSource } from '@angular/material/table';
 /*DECLARE $ for jquery */
 declare var $;
 
-@Component({
-  selector: 'app-view-invoice',
-  templateUrl: './view-invoice.component.html',
-  styleUrls: ['./view-invoice.component.scss']
-})
-export class ViewInvoiceComponent implements OnInit {
-  pageTitle: string = 'View Invoice';
-  pageIcon: string =  'fa-file-invoice-dollar';
 
-  invoiceId: string;
-  allDataObj: Invoice;
-  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'total' ];
+@Component({
+  selector: 'app-view-expense',
+  templateUrl: './view-expense.component.html',
+  styleUrls: ['./view-expense.component.scss']
+})
+export class ViewExpenseComponent implements OnInit {
+
+  pageTitle: string = 'View Expense';
+  pageIcon: string =  'fa-file-dollar-sign';
+
+  expenseId: string;
+  allDataObj: Expense;
+  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'total' ];
   itemsDataSource: any;
-  isOverdue: boolean = false;
-  isCollected: boolean = false;
 
   // For loader
   isLoadingResults = false;
@@ -51,7 +51,7 @@ export class ViewInvoiceComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private pageTitleService: PageTitleService,
-    private invoicesService: InvoicesService
+    private expensesService: ExpensesService
   ) {
     this.pageTitleService.changeTitle(this.pageTitle);
     this.pageTitleService.changeIcon(this.pageIcon);
@@ -62,7 +62,7 @@ export class ViewInvoiceComponent implements OnInit {
 
     // getting the invoice id from the route parameters map object
     this.activatedRoute.paramMap.subscribe(params => {
-      this.invoiceId = params.get('id');
+      this.expenseId = params.get('id');
     }, err => {
       // on error
       console.log(err);
@@ -72,25 +72,17 @@ export class ViewInvoiceComponent implements OnInit {
     });
 
     // Load Details
-    this.getInvoiceDetailsFromService( this.invoiceId );
+    this.getExpenseDetailsFromService( this.expenseId );
   }
 
 
-  getInvoiceDetailsFromService( invoiceId ): void{
-    this.invoicesService.getInvoiceDetails( invoiceId ).subscribe( invoiceDetails => {
-      console.log(invoiceDetails);
-      this.allDataObj = invoiceDetails.ViewInvoiceByIdResult[0];
+  getExpenseDetailsFromService( expenseId ): void{
+    this.expensesService.getExpenseDetails( expenseId ).subscribe( expenseDetails => {
+      console.log(expenseDetails);
+      this.allDataObj = expenseDetails.ViewExpenseByIdResult[0];
       const formatedCreationDate = this.allDataObj.CreationDate !== null ?
                                    this.allDataObj.CreationDate.replace('/Date(', '').replace('+0000)/', '') : '--';
-      const formatedDueDate = this.allDataObj.DueDate !== null ?
-                              this.allDataObj.DueDate.replace('/Date(', '').replace('+0000)/', '') : '--';
       this.allDataObj.CreationDate = this.datePipe.transform(formatedCreationDate, 'MMM d, y, h:mm a');
-      this.allDataObj.DueDate = this.datePipe.transform(formatedDueDate, 'MMM d, y, h:mm a');
-      this.allDataObj.taxRate = this.allDataObj.taxRate / 100;
-      // checking if due date is expired
-      new Date(this.allDataObj.DueDate) < new Date() ? this.isOverdue = true : this.isOverdue = false;
-      // checking if collected
-      this.allDataObj.status === 'Collected' ? this.isCollected = true : this.isCollected = false;
     }, err => {
       // on error
       console.log(err);
@@ -99,7 +91,7 @@ export class ViewInvoiceComponent implements OnInit {
       // Hide loader
       this.isLoadingResults = false;
       // Assign the data to the data source for the table to render
-      this.itemsDataSource = new MatTableDataSource(this.allDataObj.InvoiceItem);
+      this.itemsDataSource = new MatTableDataSource(this.allDataObj.ExpenseItem);
     });
   }
 

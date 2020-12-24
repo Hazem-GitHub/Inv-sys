@@ -101,8 +101,8 @@
                                                 <mat-label>Select a currency</mat-label>
                                                 <mat-select formControlName="currency">
                                                     <mat-option>Select a currency</mat-option>
-                                                    <mat-option *ngFor="let currency of currencyList" [value]="currency.CurrencyId">
-                                                        {{currency.Name}}
+                                                    <mat-option *ngFor="let currency of currencyList" disabled={{currency.Disable}} [value]="currency.CurrencyId">
+                                                        {{currency.Name === "'EGP'" || currency.Name === "EGP" ? 'EGP (Default)' : currency.Name}}
                                                     </mat-option>
                                                 </mat-select>
                                             </mat-form-field>
@@ -135,12 +135,135 @@
                                 <hr>
                                 <!-- value: {{ editExpenseForm.value | json }} -->
                                 
-                                <div *ngIf="expenseItemsForms.controls.length > 0" formArrayName="expenseItems">
+
+                                <div class="table-container container-full-width">
+                                    <div *ngIf="expenseItemsForms.controls.length > 0" formArrayName="expenseItems">
+                                        <table mat-table [dataSource]="expenseItemsDataSource" class="mat-elevation-z0 padding-table uk-table">
+
+                                                <ng-container matColumnDef="index">
+                                                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                    <td mat-cell *matCellDef="let i=index" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-margin-remove">
+                                                            <label>{{ i + 1 }}</label>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="id">
+                                                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-margin-remove">
+                                                            <label>{{ element.id || '-' }}</label>
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            
+                                                <ng-container matColumnDef="name">
+                                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <mat-form-field floatLabel="auto" appearance="fill">
+                                                                    <mat-label> Name </mat-label>
+                                                                    <input matInput placeholder="Item Name" type="text" value="{{ element.itemName }}" formControlName="itemName" #itemName/>
+                                                                    <mat-hint align="end">{{itemName.value.length}} / 50</mat-hint>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            
+                                                <ng-container matColumnDef="comments">
+                                                    <th mat-header-cell *matHeaderCellDef> Comments </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <mat-form-field floatLabel="auto" appearance="fill">
+                                                                    <mat-label> Comments (Optional) </mat-label>
+                                                                    <textarea matInput placeholder="Comments (Optional)" rows="1" value="{{ element.itemDescription }}" formControlName="itemDescription" #itemDescription></textarea>
+                                                                    <mat-hint align="end">{{itemDescription.value.length}} / 500</mat-hint>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                            
+                                                <ng-container matColumnDef="unitPrice">
+                                                    <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <mat-form-field floatLabel="auto" appearance="fill">
+                                                                    <mat-label> Unit price ({{ currentCurrencyValue }}) </mat-label>
+                                                                    <input matInput placeholder="Unit price ({{ currentCurrencyValue }})" type="number" value="{{ element.unitPrice }}" formControlName="unitPrice"/>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+                                                
+                                                <ng-container matColumnDef="quantity">
+                                                    <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <mat-form-field floatLabel="auto" appearance="fill">
+                                                                    <mat-label> Quantity </mat-label>
+                                                                    <input matInput placeholder="Quantity" type="number" value="{{ element.quantity }}" formControlName="quantity"/>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="vatAmounts">
+                                                    <th mat-header-cell *matHeaderCellDef> VAT Amount ({{ currentCurrencyValue }}) </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <mat-form-field floatLabel="auto" appearance="fill">
+                                                                    <mat-label> VAT Amount ({{ currentCurrencyValue }}) </mat-label>
+                                                                    <input matInput placeholder="VAT Amount ({{ currentCurrencyValue }})" type="number" value="{{ element.vatAmounts }}" formControlName="vat"/>
+                                                                </mat-form-field>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+        
+                                                <ng-container matColumnDef="actions">
+                                                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                                                        <div class="uk-padding-small uk-padding-remove-horizontal">
+                                                            <div class="uk-form-controls uk-margin-remove">
+                                                                <div *ngIf="element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{element.id}}" (click)="removeExistingExpenseItem(i, element.id)"><i class="far fa-trash-alt"></i></button>
+                                                                </div>
+                                                                <div *ngIf="!element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="far fa-trash-alt"></i></button>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </ng-container>
+
+
+                                          
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- <div *ngIf="expenseItemsForms.controls.length > 0" formArrayName="expenseItems">
                                     <div class="border-bottom-light uk-margin-remove uk-flex uk-flex-row uk-flex-wrap uk-flex-wrap-stretch uk-flex-between uk-flex-middle" *ngFor="let item of expenseItemsForms.controls; let i=index" [formGroupName]="i">
                                         <div class="uk-padding-small uk-margin-remove">
                                             <label>{{ i+1 }}</label>
                                         </div>
-                                        <!-- <label><strong> {{ i+1 }}.</strong></label> -->
                                         
                                         <div class="uk-padding-small uk-padding-remove-horizontal">
                                             <div class="uk-form-controls uk-margin-remove">
@@ -191,16 +314,16 @@
                                         </div>
                                         
                                         <div *ngIf="item.value.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                            <button mat-flat-button type="button" color="warn" id="{{item.value.id}}" (click)="removeExistingExpenseItem(i, item.value.id)"><i class="fas fa-times"></i></button>
+                                            <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{item.value.id}}" (click)="removeExistingExpenseItem(i, item.value.id)"><i class="far fa-trash-alt"></i></button>
                                         </div>
                                         <div *ngIf="!item.value.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                            <button mat-flat-button type="button" color="warn" (click)="removeExpenseItem(i)"><i class="fas fa-times"></i></button>
+                                            <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="far fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                     
             
             
-                                </div>
+                                </div> -->
                                 
                                 <div class="btns-container uk-margin-bottom uk-margin-top">
                                     <button mat-raised-button type="button" color="primary" (click)="addExpenseItem()"><i class="fas fa-plus"></i> New Expense item</button>
@@ -225,9 +348,9 @@
             </div>
         </div>
         <hr/>
-        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-center">
+        <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-start">
             <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!editExpenseForm.valid || isSubmitting">
-                Save Changes <i class="far fa-save uk-margin-small-left"></i> 
+                Save Changes <i class="fas fa-check uk-margin-small-left"></i> 
                 <span *ngIf="isSubmitting" class="loading-container uk-margin-small-left">
                     <span class="spinnerContainer">
                         <span uk-spinner></span>

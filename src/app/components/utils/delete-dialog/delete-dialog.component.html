@@ -1,8 +1,10 @@
-<h2 mat-dialog-title>Delete {{fromPage.type.replace('-',' ')}}</h2>
+<h2 mat-dialog-title><i class="far fa-trash-alt uk-margin-small-right"></i> Delete {{fromPage.type.replace('-',' ')}}</h2>
 <mat-dialog-content class="mat-typography">
   <h3>Are you sure to DELETE {{fromPage.type.replace('-',' ')}} with ID {{fromPage.id}}?</h3>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button color="basic" (click)="closeDialog(false)" cdkFocusInitial>Cancel</button>
-  <button mat-button color="warn" (click)="deleteHandler(fromPage.id, fromPage.type)">Delete</button>
+<mat-dialog-actions align="start">
+  <div style="margin-bottom: 10px;">
+    <button mat-flat-button color="warn" (click)="deleteHandler(fromPage.id, fromPage.type)">Delete</button>
+    <button mat-flat-button color="basic" (click)="closeDialog(false)" cdkFocusInitial>Cancel</button>
+  </div>
 </mat-dialog-actions>

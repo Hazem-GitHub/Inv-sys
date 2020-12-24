@@ -39,6 +39,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 /*Router */
 import { Router } from '@angular/router';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 
@@ -98,6 +99,9 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
   paidAmount: number;
   dueAmount: number;
   taxName: string;
+
+  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'actions'];
+  invoiceItemsDataSource: any;
 
 
   clientsListObservable: any;
@@ -206,17 +210,19 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
           // in order to take effect
           this.newInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
           this.newInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
-
-          this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
-            this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
-          }, err => {
-            // on error
-            console.log(err);
-          }, () => {
-            // on complete
-            // $('.loading-container .spinnerContainer').hide();
-            this.isCalculatingResults = false;
-          });
+          if (this.newInvoiceForm.value.currency) {
+            console.log(this.newInvoiceForm.value.currency);
+            this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
+              this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
+            }, err => {
+              // on error
+              console.log(err);
+            }, () => {
+              // on complete
+              // $('.loading-container .spinnerContainer').hide();
+              this.isCalculatingResults = false;
+            });
+          }
         });
       }else{
         this.totalAmount = this.subTotalAmount;
@@ -232,17 +238,20 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
         // in order to take effect
         this.newInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
         this.newInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
-
-        this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
-          this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
-        }, err => {
-          // on error
-          console.log(err);
-        }, () => {
-          // on complete
-          // $('.loading-container .spinnerContainer').hide();
-          this.isCalculatingResults = false;
-        });
+        console.log(this.newInvoiceForm.value.currency);
+        if (this.newInvoiceForm.value.currency) {
+          this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
+            this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
+          }, err => {
+            // on error
+            console.log(err);
+          }, () => {
+            // on complete
+            // $('.loading-container .spinnerContainer').hide();
+            this.isCalculatingResults = false;
+          });
+        }
+        
       }
     }, err => {
       // on error
@@ -254,6 +263,7 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
     // Add one invoice item by default
     this.addInvoiceItem();
     this.isLoadingResults = false;
+    this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
   }// End of OnInit
 
   ngOnDestroy(): void{
@@ -462,12 +472,14 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
       quantity: [1, [Validators.required, Validators.min(1)]]
     });
     this.invoiceItemsForms.push(invoiceItem);
+    this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
   }
 
 
   /* Remove Invoice Items on Click Remove item button */
   removeInvoiceItem(i): void {
     this.invoiceItemsForms.removeAt(i);
+    this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
   }
 
   // Calculating SUBTOTAL from items

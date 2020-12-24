@@ -1,9 +1,9 @@
 export class ExpenseItem {
     id: number;
-    itemName?: string;
+    itemName: string;
     itemDescription?: string;
-    unitPrice?: number;
-    quantity?: number;
-    vat?: number;
-    totalPrice?: number;
+    unitPrice: number;
+    quantity: number;
+    Vat: number;
+    total: number;
 }

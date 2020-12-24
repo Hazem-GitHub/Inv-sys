@@ -15,8 +15,18 @@ export class CurrencyService {
     return this.http.get<any>(endpoint);
   }
 
+  // getCurrencyList( ): Observable<any> {
+  //   const endpoint: string = `http://invoices.5d-agency.com/service1.svc/GetCurrency?`;
+  //   return this.http.get<any>(endpoint);
+  // }
+
   getCurrency( currencyId: number ): Observable<any> {
     const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/ViewCurrency?currencyId=${ currencyId }`;
+    return this.http.get<any>(endpoint);
+  }
+
+  editCurrency( currency: any ): Observable<any> {
+    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/EditCurrencyValue?CurrencyId=${ currency.id }&ValueByEGP=${ currency.egpValue }&Disable=${ currency.disabled }`;
     return this.http.get<any>(endpoint);
   }
 }

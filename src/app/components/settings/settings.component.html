@@ -1,1 +1,18 @@
-<p>{{pageTitle}}</p>
+<div class="container-full-width">
+    <mat-tab-group mat-align-tabs="start" animationDuration="0ms">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <!-- <mat-icon>thumb_up</mat-icon> -->
+                Currency
+            </ng-template>
+            <app-currency></app-currency>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <!-- <mat-icon>thumb_up</mat-icon> -->
+                Value Added Taxes (VAT)
+            </ng-template>
+            <app-taxes></app-taxes>
+        </mat-tab>
+    </mat-tab-group>
+</div>
