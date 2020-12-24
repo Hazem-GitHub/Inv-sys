@@ -18,21 +18,6 @@ body{
     background-color: darken($app-secondary-color,0%);
     transition: all 0.2s ease;
 }
-// Side nav
-// .mat-drawer-inner-container {
-//     max-width: 76px;
-// }
-#side-nav-container {
-    .menu-link{
-        transition: all 0.1s ease-in;
-        text-align: center;
-        span{
-            // display: none;
-            // opacity: 0;
-            transition: opacity 0.1s ease-in;
-        }
-    }
-}
 
 // Common styles
 .bold-font{
