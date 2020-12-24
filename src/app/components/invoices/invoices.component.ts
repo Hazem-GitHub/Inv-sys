@@ -108,10 +108,11 @@ export class InvoicesComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.allDataArr);
       // Linking paginator and sorting to datatable
       if ( this.dataSource ) {
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       }
-
     }, err => {
       // on error
       console.log(err);
