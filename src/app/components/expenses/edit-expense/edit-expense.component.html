@@ -6,11 +6,11 @@
 
 
 <div class="details-container container-full-width">
-    <div class="uk-margin">
+    <!-- <div class="uk-margin">
         <h2>
             <strong>Expense ID #{{expenseId}}</strong>
         </h2>
-    </div>
+    </div> -->
 
     <div *ngIf="isLoadingResults">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -39,6 +39,10 @@
                             <ng-template matStepLabel><strong>Details</strong></ng-template>
                             <div id="expense-details-wrapper">
                                 <hr>
+                                <div class="data-value">
+                                    <label>Expense ID </label>
+                                    <p> {{expenseId}}</p>
+                                </div>
                                 <div class="fieldWrapper">
                                     <div class="uk-margin">
                                         <label class="uk-form-label" for="mat-select-1">Category <mat-progress-bar *ngIf="!ExpensesTypesList" mode="indeterminate" matSuffix></mat-progress-bar></label>

@@ -9,11 +9,11 @@
     <!-- <div class="top-header-padding">
         <h3><strong>Client ID:</strong> {{clientId}}</h3>
     </div> -->
-    <div class="uk-margin">
+    <!-- <div class="uk-margin">
         <h2>
             <strong>Client ID #{{clientId}}</strong>
         </h2>
-    </div>
+    </div> -->
 
     <div *ngIf="isLoadingResults">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
@@ -40,6 +40,10 @@
             
                     <div id="client-details-wrapper">
                         <hr>
+                        <div class="data-value">
+                            <label>Client ID </label>
+                            <p> {{clientId}}</p>
+                        </div>
                         <div class="fieldWrapper">
                             <div class="uk-margin client-list-container">
                                 <label class="uk-form-label" for="mat-select-0">Type <mat-progress-bar *ngIf="!clientTypesList" mode="indeterminate" matSuffix></mat-progress-bar></label>

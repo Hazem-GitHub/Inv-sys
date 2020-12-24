@@ -1,0 +1,25 @@
+/* Custom SCSS/SASS Files */
+@import 'variables';
+@import 'mixins';
+@import 'keyframes';
+
+.data-value{
+    min-width: 280px;
+    padding: 1rem;
+    label{
+        display: inline-block;
+        width: 20%;
+        min-width: 100px;
+        max-width: max-content;
+        color: $app-primary-color;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+    }
+    p{
+        display: inline-block;
+        width: 80%;
+        min-width: 280px;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+}
