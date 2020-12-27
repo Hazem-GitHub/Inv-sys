@@ -162,11 +162,11 @@ button:not(.mat-button){
     // height: 100%!important;
     // min-height: 200px!important;
     min-width: 260px!important;
-    // &.container-full-width{
-    //     width: calc(100% - 40px)!important;
-    //     margin: 0 auto;
-    //     padding: 0!important;
-    // }
+    &.container-full-width{
+        width: calc(100% - 40px)!important;
+        margin: 0 auto;
+        padding: 1em 0!important;
+    }
 }
 /* mat-Inputs */
 form{
