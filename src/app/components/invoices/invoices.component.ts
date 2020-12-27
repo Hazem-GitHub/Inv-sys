@@ -25,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../utils/delete-dialog/delete-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '../utils/custom-snackbar/custom-snackbar.component';
+import { fromEvent } from 'rxjs';
 
 
 /*DECLARE $ for jquery */
@@ -57,6 +58,10 @@ export class InvoicesComponent implements OnInit {
   // For loader
   isLoadingResults = false;
 
+
+  // sticky
+  isSticky = false;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +81,23 @@ export class InvoicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Handling on Init
+    if ( globalThis.innerWidth < 1200 ) {
+      this.isSticky = true;
+    }else{
+      this.isSticky = false;
+    }
+    // Handling on window resize Event
+    // make actions column sticky
+    const windowResize = fromEvent(globalThis,'resize');
+    windowResize.subscribe( event => {
+      if ( globalThis.innerWidth < 1200 ) {
+        this.isSticky = true;
+      }else{
+        this.isSticky = false;
+      }
+    });
+
     this.isLoadingResults = true;
     // Load Data
     this.getInvoicesFromService();

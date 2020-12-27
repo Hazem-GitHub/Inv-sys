@@ -20,6 +20,7 @@ import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snac
 
 /* Datatable */
 import { MatTableDataSource } from '@angular/material/table';
+import { fromEvent } from 'rxjs';
 
 
 /*DECLARE $ for jquery */
@@ -39,6 +40,9 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
   // For loader
   isLoadingResults = true;
   isCalculatingResults = true;
+
+  // sticky
+  isSticky = false;
 
   // Submit Button
   isSubmitting = false;
@@ -65,7 +69,7 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
   expenseItemsArr: any[];
   createdExpenseId: number;
 
-  displayedColumns: string[] = [ 'index', 'id', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
+  displayedColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
   expenseItemsDataSource: any;
 
   clientsListObservable: any;
@@ -93,6 +97,23 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    // Handling on Init
+    if ( globalThis.innerWidth < 1200 ) {
+      this.isSticky = true;
+    }else{
+      this.isSticky = false;
+    }
+    // Handling on window resize Event
+    // make actions column sticky
+    const windowResize = fromEvent(globalThis,'resize');
+    windowResize.subscribe( event => {
+      if ( globalThis.innerWidth < 1200 ) {
+        this.isSticky = true;
+      }else{
+        this.isSticky = false;
+      }
+    });
+    
     // $('#submit-btn-container .loading-container').hide();
     // $('#totalsSpinner').hide();
     this.isLoadingResults = true;

@@ -57,7 +57,7 @@ body{
     margin: 10px auto 0!important;
     width: calc(100% - 40px)!important;
     padding: 20px!important;
-    background: #ffffff;
+    background: transparent;
 
 }
 .container-full-width{
@@ -69,11 +69,11 @@ body{
 
 .add-btn-padding{
     padding: 22px 20px 20px 20px;
-    background-color: rgba($app-secondary-color,0.95);
+    background-color: rgba($app-secondary-color,0);
 }
 .top-header-padding{
     padding: 0px 0px 0px 0px;
-    background-color:rgba($app-secondary-color,0.95);
+    background-color:rgba($app-secondary-color,0);
     border-bottom: 1px solid rgba($dark-gray-color, 0.2);
     margin-bottom: 20px;
 }
@@ -158,7 +158,7 @@ button:not(.mat-button){
     width: 100%;
     margin: 0px auto;
     // background-color: #ffffff;
-    overflow-x: auto;
+    overflow-x: visible;
     // height: 100%!important;
     // min-height: 200px!important;
     min-width: 280px!important;
@@ -218,13 +218,13 @@ label{
     border-radius: 10px;
     padding: 12px;
     &[ng-reflect-selected=true]{
-        background-color: rgba($very-light-gray-color, 0.2);
-        border: 1px solid rgba($very-light-gray-color, 0.1);
+        background-color: rgba($app-secondary-color, 0.8);
+        border: 1px solid rgba($very-light-gray-color, 0.8);
         box-shadow: 1px 2px 1px rgba($app-primary-color, 0.06);
     }
     &[ng-reflect-selected=false]{
-        background-color: rgba($very-light-gray-color, 0.1);
-        border: 1px solid rgba($very-light-gray-color, 0.1);
+        background-color: rgba($app-secondary-color, 1);
+        border: 1px solid rgba($very-light-gray-color, 0.8);
         box-shadow: 2px 4px 5px rgba($app-primary-color, 0.06);
     }
 }
@@ -235,11 +235,16 @@ label{
 .mat-vertical-content-container{
     margin-left: 24px!important;
     &::before{
-        content: none!important;
+        // content: none!important;
+        z-index: -1;
     }
 }
 .mat-vertical-content{
     padding-left: 0px!important;
+}
+
+.mat-stepper-vertical, .mat-stepper-horizontal{
+    background: transparent;
 }
 
 
@@ -355,10 +360,12 @@ label{
 table.uk-table {
     border-collapse: collapse!important;
     thead{
+        
         tr{
+            border: 1px solid $app-primary-color!important;
             th{
                 padding: 14px 14px!important;
-                border: 1px solid $app-primary-color!important;
+                border: 0px solid $dark-gray-color!important;
                 color: $app-primary-color!important;
                 font-weight: 700!important;
                 text-transform: capitalize!important;
@@ -366,7 +373,7 @@ table.uk-table {
                 min-width: 100px;
                 &:first-of-type{
                     min-width: 30px;
-                    text-align: center;
+                    // text-align: center;
                 }
             }
         }
@@ -374,9 +381,10 @@ table.uk-table {
     tbody{
         tr{
             transition: all 0.3s ease-out!important;
+            border: 1px solid $very-light-gray-color!important;
             &:hover,
             &:focus{
-                background-color: rgba($app-primary-color, 0.04)!important;
+                background-color: rgba($very-light-gray-color, 0.8)!important;
             }
             td{
                 padding: 12px 14px!important;
@@ -387,7 +395,7 @@ table.uk-table {
                 font-size: 12px!important;
                 width:auto!important;
                 min-width: 30px!important;
-                border: 1px solid $very-light-gray-color!important;
+                border: 0px solid $very-light-gray-color!important;
                 .uk-icon-button{
                     width:auto!important;
                     padding: 12px 14px!important;
@@ -398,8 +406,8 @@ table.uk-table {
                     }
                 }
                 &:first-of-type{
-                    min-width: 50px;
-                    text-align: center!important;
+                    min-width: 30px;
+                    // text-align: center!important;
                 }
             }
         }

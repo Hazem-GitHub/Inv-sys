@@ -33,6 +33,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../utils/delete-dialog/delete-dialog.component';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { fromEvent } from 'rxjs';
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -53,6 +54,9 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
   // For loader
   isLoadingResults = true;
   isCalculatingResults = true;
+
+  // sticky
+  isSticky = false;
 
   // Submit Button
   isSubmitting = false;
@@ -119,6 +123,23 @@ export class EditExpenseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Handling on Init
+    if ( globalThis.innerWidth < 1200 ) {
+      this.isSticky = true;
+    }else{
+      this.isSticky = false;
+    }
+    // Handling on window resize Event
+    // make actions column sticky
+    const windowResize = fromEvent(globalThis,'resize');
+    windowResize.subscribe( event => {
+      if ( globalThis.innerWidth < 1200 ) {
+        this.isSticky = true;
+      }else{
+        this.isSticky = false;
+      }
+    });
+
     this.isLoadingResults = true;
 
     // getting the expense id from the route parameters map object

@@ -51,20 +51,20 @@
         
         <div class="uk-navbar-item uk-logo">
             <img src="assets/img/logo.svg" alt="logo" />
+            <!-- <h1>SYSTEM</h1> -->
         </div>
 
         <div class="uk-navbar-left uk-margin-small-left">
-
+            <button mat-icon-button color="{{ isNavOpened ? 'primary' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
+                <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
+                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-chevron-right' }}"></i>
+            </button>
             <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i> {{ pageTitle }}</span>
         </div>
         
         
         <div class="uk-navbar-right uk-margin-small-right">
-            <button mat-flat-button color="{{ isNavOpened ? 'accent' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
-                <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
-                menu 
-                <i class="fas {{ isNavOpened ? 'fa-bars' : 'fa-bars' }} uk-margin-small-left"></i>
-            </button>
+            
             <!-- <ul class="uk-navbar-nav">
                 <li>
                     <a href="#"><i class="fas fa-bell active"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>

@@ -58,7 +58,7 @@
                     </td>
                 </ng-container> -->
             
-                <ng-container matColumnDef="setAsDisabled">
+                <ng-container matColumnDef="setAsDisabled" [stickyEnd]="isSticky">
                     <th mat-header-cell *matHeaderCellDef> Disabled </th>
                     <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
                         <div class="uk-padding-small uk-padding-remove-horizontal">
@@ -92,7 +92,10 @@
         
     </form>
 
-    <hr/>
+    
+
+</div>
+<hr/>
         <div id="submit-btn-container" class="btns-container container-full-width uk-flex uk-flex-start">
             <button mat-flat-button color="primary" type="submit" (click)="onSubmitHandler()" [disabled]="!currencyForm.valid || isSubmitting">
                 Save Changes <i class="fas fa-check uk-margin-small-left"></i> 
@@ -103,5 +106,3 @@
                 </span>
             </button>
         </div>
-
-</div>

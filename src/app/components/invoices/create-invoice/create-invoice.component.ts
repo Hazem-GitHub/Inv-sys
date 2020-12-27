@@ -40,6 +40,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { fromEvent } from 'rxjs';
 
 
 
@@ -135,7 +136,8 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
   invoiceItemsArr: any[];
   createdInvoiceId: number;
 
-
+  // sticky
+  isSticky = false;
 
   constructor(
     private pageTitleService: PageTitleService,
@@ -154,6 +156,23 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    // Handling on Init
+    if ( globalThis.innerWidth < 1200 ) {
+      this.isSticky = true;
+    }else{
+      this.isSticky = false;
+    }
+    // Handling on window resize Event
+    // make actions column sticky
+    const windowResize = fromEvent(globalThis,'resize');
+    windowResize.subscribe( event => {
+      if ( globalThis.innerWidth < 1200 ) {
+        this.isSticky = true;
+      }else{
+        this.isSticky = false;
+      }
+    });
+
     this.isLoadingResults = true;
 
     // form

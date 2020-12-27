@@ -153,14 +153,14 @@
                                                     </td>
                                                 </ng-container>
 
-                                                <ng-container matColumnDef="id">
+                                                <!-- <ng-container matColumnDef="id">
                                                     <th mat-header-cell *matHeaderCellDef> ID </th>
                                                     <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
                                                         <div class="uk-padding-small uk-margin-remove">
                                                             <label>{{ element.id || '-' }}</label>
                                                         </div>
                                                     </td>
-                                                </ng-container>
+                                                </ng-container> -->
                                             
                                                 <ng-container matColumnDef="name">
                                                     <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -239,16 +239,16 @@
                                                     </td>
                                                 </ng-container>
         
-                                                <ng-container matColumnDef="actions">
+                                                <ng-container matColumnDef="actions" [stickyEnd]="isSticky">
                                                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                                                     <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
                                                         <div class="uk-padding-small uk-padding-remove-horizontal">
                                                             <div class="uk-form-controls uk-margin-remove">
-                                                                <div *ngIf="element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                <!-- <div *ngIf="element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
                                                                     <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{element.id}}" (click)="removeExistingExpenseItem(i, element.id)"><i class="far fa-trash-alt"></i></button>
-                                                                </div>
-                                                                <div *ngIf="!element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="far fa-trash-alt"></i></button>
+                                                                </div> -->
+                                                                <div class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
+                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="fas fa-times"></i></button>
                                                                 </div>
                                                             </div>
                                                             

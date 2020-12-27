@@ -179,8 +179,8 @@
                                             <mat-form-field floatLabel="auto" appearance="fill">
                                                 <mat-label>Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></mat-label>
                                                 <input matInput placeholder="Paid Amounts" type="number" #paidAmounts formControlName="paidAmount"/>
-                                                <mat-hint align="end">Maximum ( {{totalAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
-                                                <mat-hint align="start">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <mat-hint align="start">Maximum ( {{totalAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <mat-hint align="end">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
                                                 <span *ngIf="currentCurrencyValue" class="uk-margin-small-right uk-margin-remove-top" matPrefix>{{ currentCurrencyValue }}</span>
                                             </mat-form-field>
                                         </div>
@@ -228,10 +228,10 @@
                                                 </mat-select>
                                                 <!-- <mat-hint align="start">Select VAT Rate / Create New VAT Rate</mat-hint> -->
                                             </mat-form-field>
-                                            <button mat-raised-button type="button" [attr.aria-label]="'Create New VAT Rate'" routerLink="/settings/vat/new">
+                                            <!-- <button mat-raised-button type="button" [attr.aria-label]="'Create New VAT Rate'" routerLink="/settings/taxes">
                                                 <i class="fas fa-plus"></i>
                                                 New VAT Rate
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </div>
                                     
@@ -321,6 +321,7 @@
                                                             
                                                         </div>
                                                     </td>
+                                                    
                                                 </ng-container>
                                             
                                                 <ng-container matColumnDef="unitPrice">
@@ -336,6 +337,7 @@
                                                             
                                                         </div>
                                                     </td>
+                                                    
                                                 </ng-container>
                                                 
                                                 <ng-container matColumnDef="quantity">
@@ -351,9 +353,10 @@
                                                             
                                                         </div>
                                                     </td>
+                                                    
                                                 </ng-container>
         
-                                                <ng-container matColumnDef="actions">
+                                                <ng-container matColumnDef="actions" [stickyEnd]="isSticky">
                                                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                                                     <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
                                                         <div class="uk-padding-small uk-padding-remove-horizontal">
@@ -362,12 +365,13 @@
                                                                     <button mat-flat-button  [disabled]="invoiceItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{element.id}}" (click)="removeExistingInvoiceItem(i, element.id)"><i class="far fa-trash-alt"></i></button>
                                                                 </div> -->
                                                                 <div class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                                                    <button mat-flat-button  [disabled]="invoiceItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeInvoiceItem(i)"><i class="far fa-trash-alt"></i></button>
+                                                                    <button mat-flat-button  [disabled]="invoiceItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeInvoiceItem(i)"><i class="fas fa-times"></i></button>
                                                                 </div>
                                                             </div>
                                                             
                                                         </div>
                                                     </td>
+                                                    
                                                 </ng-container>
 
 
@@ -464,7 +468,7 @@
                 <div *ngIf="currentCurrencyValue">
                     
                     <div *ngIf="isTaxed" class="uk-flex uk-flex-column uk-flex-bottom uk-padding-small">
-                        <h3><strong class="primary-text uk-margin-small-right">SubTotal Amounts</strong> <strong>{{ (subTotalAmount ? subTotalAmount : 0) | mycurrency : currentCurrencyValue }}</strong></h3>
+                        <!-- <h3><strong class="primary-text uk-margin-small-right">SubTotal Amounts</strong> <strong>{{ (subTotalAmount ? subTotalAmount : 0) | mycurrency : currentCurrencyValue }}</strong></h3> -->
                         <h3><strong class="primary-text uk-margin-small-right">Taxes ( {{ taxName }} ) </strong> <strong>{{ taxRateValue }}% </strong></h3>
                     </div>
                     <div class="uk-flex uk-flex-column uk-flex-bottom uk-padding-small" [ngClass]="{ 'border-top-light': isTaxed }">

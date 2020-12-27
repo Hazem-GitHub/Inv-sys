@@ -30,19 +30,21 @@
     //     width:83px;
     // }
     .uk-nav{
-        padding: 40px 5px;
+        padding: 20px 15px;
+        display: block;
         height: 100%;
+        width: 100%;
         .uk-flex{
-            // width: 100%;
+            width: 100%;
             & > div{
-                // width: 100%;
+                width: 100%;
             }
         }
     }
     
     li.menu-item {
         padding: 0px;
-        margin-bottom:30px;
+        margin-bottom:20px;
         width:100%;
         & a.menu-link{
             // padding: 12px 16px;
@@ -52,16 +54,18 @@
             text-align: center;
             & i{
                 padding-top: 5px;
-                font-size: 20px;
+                font-size: 16px;
                 color: $medium-gray-color;
                 transition: color 0.3s ease-out;
             }
             & span{
                 display: block;
-                font-size: 11px;
+                font-size: 10px;
+                text-transform: uppercase;
+                // letter-spacing: 1px;
                 text-align: center;
                 color: $medium-gray-color;
-                font-weight: 500;
+                font-weight: 400;
                 transition: opacity 0.1s ease-in;
                 // margin
             }

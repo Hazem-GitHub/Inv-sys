@@ -22,7 +22,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../utils/delete-dialog/delete-dialog.component';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
-import { Observable } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -40,6 +40,10 @@ export class CurrencyComponent implements OnInit, OnDestroy {
 
   // For loader
   isLoadingResults = true;
+
+  // Sticky
+  isSticky = false;
+
   // Submit Button
   isSubmitting = false;
 
@@ -67,6 +71,23 @@ export class CurrencyComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    // Handling on Init
+    if ( globalThis.innerWidth < 1200 ) {
+      this.isSticky = true;
+    }else{
+      this.isSticky = false;
+    }
+    // Handling on window resize Event
+    // make actions column sticky
+    const windowResize = fromEvent(globalThis,'resize');
+    windowResize.subscribe( event => {
+      if ( globalThis.innerWidth < 1200 ) {
+        this.isSticky = true;
+      }else{
+        this.isSticky = false;
+      }
+    });
+
     this.isLoadingResults = true;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // form

@@ -5,10 +5,11 @@
 
 #top-nav-container{
     background-color: #ffffff;
-    border-bottom: 1px solid $very-light-gray-color;
+    border-bottom: none;
     transition: width 0.3s ease-out;
     z-index: 1000;
     height: 80px;
+    box-shadow: 1px 2px 1px rgba($app-primary-color, 0.06);
     .uk-navbar-nav a i{
         font-size: 16px;
         color: $light-gray-color;
@@ -16,7 +17,9 @@
     .page-title{
         font-size: 16px;
         font-weight: 500;
+        // letter-spacing: 1px;
         color: $app-primary-color;
+        text-transform: uppercase;
         i{
             font-size: 1.4em;
             margin-right: 10px;
@@ -25,14 +28,26 @@
 
     
     .uk-logo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         background-color: $app-primary-color;
         // border-bottom: 1px solid $light-gray-color;
         overflow: hidden;
-        border-bottom: 1px solid $very-light-gray-color;
-        border-right: 1px solid $very-light-gray-color;
-        width: 78px;
+        // border-bottom: 1px solid $very-light-gray-color;
+        // border-right: 1px solid $very-light-gray-color;
+        width: 100px;
         img{
             width: 50px;
+        }
+        h1{
+            margin-bottom: 0;
+            font-size: 9px;
+            color: #fff;
+            line-height: 10px;
+            margin-top:5px;
+            letter-spacing: 2px;
         }
     }
     .uk-nav{

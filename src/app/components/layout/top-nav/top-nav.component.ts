@@ -11,7 +11,7 @@ export class TopNavComponent implements OnInit {
   pageIcon: string;
   @Input() sidenav: any;
 
-  isNavOpened: boolean = false;
+  isNavOpened: boolean = true;
 
   // constructor(private pageTitleService: PageTitleService) {
   // }

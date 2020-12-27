@@ -8,27 +8,32 @@ mat-sidenav-container{
     height: calc(100vh - 80px);
 }
 mat-sidenav-content{
-    background: $app-secondary-color;
+    background: #fdfdfd;
     min-height: 100%;
 }
-
+.mat-drawer-side{
+    border:none;
+}
 mat-sidenav{
     background: $app-secondary-color;
     height: 100%;
-    max-width: 77px;
+    max-width: 50vw;
+    width: 100px;
+    box-shadow: 2px 1px 1px rgba($app-primary-color, 0.06);
 }
 
-.page-title{
-    display: block;
-    // margin-top: 1em;
-    padding: 1em;
-    line-height: 3em;
-    font-size: 16px;
-    font-weight: 500;
-    color: $app-primary-color;
+// .page-title{
+//     display: block;
+//     // margin-top: 1em;
+//     padding: 1em;
+//     line-height: 3em;
+//     font-size: 16px;
+//     font-weight: 500;
+//     text-transform: uppercase;
+//     color: $app-primary-color;
     
-    i{
-        font-size: 1.4em;
-        margin-right: 10px;
-    }
-}
+//     i{
+//         font-size: 1.4em;
+//         margin-right: 10px;
+//     }
+// }
