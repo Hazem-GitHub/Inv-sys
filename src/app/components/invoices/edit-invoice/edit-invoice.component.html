@@ -36,7 +36,7 @@
             <div class="uk-width-full">
                 
                 <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "editInvoiceForm" (ngSubmit)="onSubmitHandler()">
-                    <mat-vertical-stepper [linear]="false" #stepper>
+                    <mat-vertical-stepper [linear]="true" #stepper>
                         <mat-step>
                             <ng-template matStepLabel><strong>Details</strong></ng-template>
                             <div id="invoice-details-wrapper">
@@ -204,7 +204,7 @@
                                                 <button type="button" mat-icon-button color="warn" *ngIf="editInvoiceForm.controls.paidAmount.invalid" (click)="dueDP.open()" class="uk-margin-small-bottom" matSuffix><i class="fas fa-exclamation-circle"></i></button>
                                                 <mat-error *ngIf="editInvoiceForm.controls.paidAmount.invalid">Invalid value</mat-error>
                                                 <mat-hint align="start">Maximum ( {{totalAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
-                                                <mat-hint align="end">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <!-- <mat-hint align="end">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint> -->
                                                 <span *ngIf="currentCurrencyValue" class="uk-margin-small-right uk-margin-remove-top" matPrefix>{{ currentCurrencyValue }}</span>
                                             </mat-form-field>
                                         </div>

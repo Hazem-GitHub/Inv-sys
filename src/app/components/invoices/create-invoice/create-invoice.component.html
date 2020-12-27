@@ -180,7 +180,7 @@
                                                 <mat-label>Paid Amounts <span matSuffix>( {{ currentCurrencyValue }} )</span></mat-label>
                                                 <input matInput placeholder="Paid Amounts" type="number" #paidAmounts formControlName="paidAmount"/>
                                                 <mat-hint align="start">Maximum ( {{totalAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
-                                                <mat-hint align="end">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint>
+                                                <!-- <mat-hint align="end">Due Amounts ( {{dueAmount | mycurrency: currentCurrencyValue }} )</mat-hint> -->
                                                 <span *ngIf="currentCurrencyValue" class="uk-margin-small-right uk-margin-remove-top" matPrefix>{{ currentCurrencyValue }}</span>
                                             </mat-form-field>
                                         </div>

@@ -158,10 +158,15 @@ button:not(.mat-button){
     width: 100%;
     margin: 0px auto;
     // background-color: #ffffff;
-    overflow-x: visible;
+    overflow-x: auto;
     // height: 100%!important;
     // min-height: 200px!important;
-    min-width: 280px!important;
+    min-width: 260px!important;
+    &.container-full-width{
+        width: calc(100% - 40px)!important;
+        margin: 0 auto;
+        padding: 0!important;
+    }
 }
 /* mat-Inputs */
 form{
@@ -233,15 +238,16 @@ label{
 }
 
 .mat-vertical-content-container{
-    margin-left: 24px!important;
+    margin-left: 0px!important;
     &::before{
-        // content: none!important;
+        content: none!important;
         z-index: -1;
     }
 }
 .mat-vertical-content{
-    padding-left: 0px!important;
+    padding-left: 10px!important;
 }
+
 
 .mat-stepper-vertical, .mat-stepper-horizontal{
     background: transparent;
@@ -358,6 +364,9 @@ label{
 }
 
 table.uk-table {
+    // display: block!important;
+    // position: relative!important;
+    // width: calc(100% - 40px)!important;
     border-collapse: collapse!important;
     thead{
         

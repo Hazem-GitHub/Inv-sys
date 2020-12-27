@@ -8,7 +8,7 @@ mat-sidenav-container{
     height: calc(100vh - 80px);
 }
 mat-sidenav-content{
-    background: #fdfdfd;
+    background: #fafafa;
     min-height: 100%;
 }
 .mat-drawer-side{
@@ -18,7 +18,7 @@ mat-sidenav{
     background: $app-secondary-color;
     height: 100%;
     max-width: 50vw;
-    width: 100px;
+    width: 80px;
     box-shadow: 2px 1px 1px rgba($app-primary-color, 0.06);
 }
 
