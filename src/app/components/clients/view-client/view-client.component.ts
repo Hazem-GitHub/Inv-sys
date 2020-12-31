@@ -15,6 +15,10 @@ import { PercentPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
+
 /*DECLARE $ for jquery */
 declare var $;
 
@@ -41,7 +45,8 @@ export class ViewClientComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private pageTitleService: PageTitleService,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private snackBar: MatSnackBar
   ) {
     this.pageTitleService.changeTitle(this.pageTitle);
     this.pageTitleService.changeIcon(this.pageIcon);
@@ -73,10 +78,28 @@ export class ViewClientComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       // Hide loader
       this.isLoadingResults = false;
+    });
+  }
+
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
   }
 }

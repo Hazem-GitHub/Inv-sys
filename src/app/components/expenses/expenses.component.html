@@ -72,9 +72,9 @@
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let item">
                 <ul class="uk-iconnav">
-                    <li><button mat-flat-button color="accent" routerLink="/expenses/view/{{item.id}}" data-invoiceId="{{item.id}}" class='view-expense-btn uk-text-center'><i class="far fa-eye"></i></button></li>
-                    <li><button mat-flat-button color="primary" routerLink="/expenses/edit/{{item.id}}" data-invoiceId="{{item.id}}"  class='edit-expense-btn uk-text-center'><i class="far fa-edit"></i></button></li>
-                    <li><button mat-flat-button color="warn" (click)="openDeleteDialog(item.id)" data-invoiceId="{{item.id}}"  class='delete-expense-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
+                    <li><button mat-stroked-button color="primary" routerLink="/expenses/view/{{item.id}}" data-invoiceId="{{item.id}}" class='view-expense-btn uk-text-center'><i class="far fa-eye"></i></button></li>
+                    <li><button mat-stroked-button color="primary" routerLink="/expenses/edit/{{item.id}}" data-invoiceId="{{item.id}}"  class='edit-expense-btn uk-text-center'><i class="far fa-edit"></i></button></li>
+                    <li><button mat-stroked-button color="warn" (click)="openDeleteDialog(item.id)" data-invoiceId="{{item.id}}"  class='delete-expense-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
                 </ul>
             </td>
         </ng-container>

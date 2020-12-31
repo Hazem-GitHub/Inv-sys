@@ -11,7 +11,7 @@ export class CurrencyService {
   constructor(private http: HttpClient) { }
 
   getCurrencies( ): Observable<any> {
-    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/ViewAllCurrency?`;
+    const endpoint: string = `/api/ViewAllCurrency?`;
     return this.http.get<any>(endpoint);
   }
 
@@ -21,12 +21,12 @@ export class CurrencyService {
   // }
 
   getCurrency( currencyId: number ): Observable<any> {
-    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/ViewCurrency?currencyId=${ currencyId }`;
+    const endpoint: string = `/api/ViewCurrency?currencyId=${ currencyId }`;
     return this.http.get<any>(endpoint);
   }
 
   editCurrency( currency: any ): Observable<any> {
-    const endpoint: string = `https://cors-anywhere.herokuapp.com/http://invoices.5d-agency.com/service1.svc/EditCurrencyValue?CurrencyId=${ currency.id }&ValueByEGP=${ currency.egpValue }&Disable=${ currency.disabled }`;
+    const endpoint: string = `/api/EditCurrencyValue?CurrencyId=${ currency.id }&ValueByEGP=${ currency.egpValue }&Disable=${ currency.disabled }`;
     return this.http.get<any>(endpoint);
   }
 }

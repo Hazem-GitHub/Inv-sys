@@ -23,8 +23,10 @@ import { MatTableDataSource } from '@angular/material/table';
 /* Components */
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../utils/delete-dialog/delete-dialog.component';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '../utils/custom-snackbar/custom-snackbar.component';
+
 import { fromEvent } from 'rxjs';
 
 
@@ -121,9 +123,12 @@ export class InvoicesComponent implements OnInit {
         item.DueDate = this.datePipe.transform(formatedDueDate, 'MMM d, y, h:mm a');
         item.taxRate = item.taxRate / 100;
         // checking if due date is expired
-        new Date(item.DueDate) < new Date() ? this.isOverdue = true : this.isOverdue = false;
+        console.log('due date: ' + new Date(item.DueDate));
+        console.log('date now: ' +  new Date());
+        console.log('is due date passed by: ' + (new Date(item.DueDate) <= new Date()));
+        new Date(item.DueDate) <= new Date() ? item.isOverdue = true : item.isOverdue = false;
         // checking if collected
-        item.status === 'Collected' ? this.isCollected = true : this.isCollected = false;
+        item.status === 'Collected' ? item.isCollected = true : item.isCollected = false;
       }
 
       // Assign the data to the data source for the table to render
@@ -138,6 +143,9 @@ export class InvoicesComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       // Hide Loader on data complete loading
@@ -176,6 +184,21 @@ export class InvoicesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
+    });
+  }
+
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
   }
 

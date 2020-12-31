@@ -22,4 +22,6 @@ export class Invoice {
     taxId?: number;
     taxes?: boolean;
     totalAmounts?: number;
+    isOverdue?: boolean;
+    isCollected?: boolean;
 }

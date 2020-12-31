@@ -245,10 +245,10 @@
                                                         <div class="uk-padding-small uk-padding-remove-horizontal">
                                                             <div class="uk-form-controls uk-margin-remove">
                                                                 <div *ngIf="element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{element.id}}" (click)="removeExistingExpenseItem(i, element.id)"><i class="far fa-trash-alt"></i></button>
+                                                                    <button mat-stroked-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" id="{{element.id}}" (click)="removeExistingExpenseItem(i, element.id)"><i class="far fa-trash-alt"></i></button>
                                                                 </div>
                                                                 <div *ngIf="!element.id" class="uk-padding-small uk-padding-remove-horizontal uk-margin-remove btns-container">
-                                                                    <button mat-flat-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="fas fa-times"></i></button>
+                                                                    <button mat-stroked-button [disabled]="expenseItemsForms.controls.length === 1 && i === 0 ? true : false" type="button" color="warn" (click)="removeExpenseItem(i)"><i class="fas fa-times"></i></button>
                                                                 </div>
                                                             </div>
                                                             

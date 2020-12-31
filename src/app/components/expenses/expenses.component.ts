@@ -24,6 +24,9 @@ import {MatDialog} from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../utils/delete-dialog/delete-dialog.component';
 import { fromEvent } from 'rxjs';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from '../utils/custom-snackbar/custom-snackbar.component';
+
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -71,7 +74,8 @@ export class ExpensesComponent implements OnInit {
     private router: Router,
     private pageTitleService: PageTitleService,
     private expensesService: ExpensesService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.pageTitleService.changeTitle(this.pageTitle);
     this.pageTitleService.changeIcon(this.pageIcon);
@@ -129,6 +133,9 @@ export class ExpensesComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       // Hide Loader on data complete loading
@@ -168,6 +175,21 @@ export class ExpensesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
+    });
+  }
+
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
   }
 }

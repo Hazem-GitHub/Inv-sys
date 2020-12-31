@@ -261,6 +261,9 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on creating expense','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isSubmitting = false;
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -273,6 +276,9 @@ export class CreateExpenseComponent implements OnInit, OnDestroy {
         }, err => {
           // on error
           console.log(err);
+          this.showNotification(15000, 'Error on creating expense','Reload', 'none' , false, 'warn');
+          // Hide loader
+          this.isSubmitting = false;
         }, () => {
           // on complete
           // $('.loading-container .spinnerContainer').hide();

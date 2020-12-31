@@ -25,6 +25,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -54,7 +55,8 @@ const MaterialComponents = [
   MatSidenavModule,
   MatGridListModule,
   MatBadgeModule,
-  MatTabsModule
+  MatTabsModule,
+  MatMenuModule
 ];
 
 @NgModule({

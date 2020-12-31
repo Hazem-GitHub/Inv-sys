@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 
+import { UIkit } from '../../../../../node_modules/uikit/dist/js/uikit';
+
 /*DECLARE $ for jquery */
 declare var $;
 
@@ -73,6 +75,15 @@ export class CreateClientComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      if( err.status !== 4 ) {
+        UIkit.notification({
+          message: err.statusText,
+          status: 'warn',
+          pos: 'bottom-center',
+          timeout: 5000
+        });
+      
+      }
     }, () => {
       // on complete
       // $('.loading-container .spinnerContainer').hide();
@@ -113,6 +124,9 @@ export class CreateClientComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on creating client','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       this.isSubmitting = false;

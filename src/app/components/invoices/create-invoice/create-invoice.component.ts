@@ -442,6 +442,9 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
       }, err => {
         // on error
         console.log(err);
+        this.showNotification(15000, 'Error on creating invoice','Reload', 'none' , false, 'warn');
+        // Hide loader
+        this.isSubmitting = false;
       }, () => {
         // on complete
         // $('.loading-container .spinnerContainer').hide();
@@ -458,6 +461,9 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
             // on complete
             // $('.loading-container .spinnerContainer').hide();
             this.createNewInvoiceItemObservable.unsubscribe();
+            this.showNotification(15000, 'Error on creating invoice','Reload', 'none' , false, 'warn');
+            // Hide loader
+            this.isSubmitting = false;
           });
         }
         this.isSubmitting = false;

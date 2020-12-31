@@ -7,12 +7,13 @@ import { Client } from '../../../models/clients/client.model';
 /*Services */
 import { PageTitleService } from '../../../services/page-title.service';
 import { ClientsService } from '../../../services/clients.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 /*Router */
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
 
 /*DECLARE $ for jquery */
@@ -109,6 +110,9 @@ export class EditClientComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       this.editClientForm.controls.name.setValue(this.allDataObj.Name);
@@ -156,6 +160,9 @@ export class EditClientComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on saving changes','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isSubmitting = false;
     }, () => {
       // on complete
       this.isSubmitting = false;

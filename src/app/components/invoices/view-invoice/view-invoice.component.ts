@@ -21,6 +21,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CustomSnackbarComponent } from '../../utils/custom-snackbar/custom-snackbar.component';
+
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -51,7 +54,8 @@ export class ViewInvoiceComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private pageTitleService: PageTitleService,
-    private invoicesService: InvoicesService
+    private invoicesService: InvoicesService,
+    private snackBar: MatSnackBar
   ) {
     this.pageTitleService.changeTitle(this.pageTitle);
     this.pageTitleService.changeIcon(this.pageIcon);
@@ -94,12 +98,31 @@ export class ViewInvoiceComponent implements OnInit {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       // Hide loader
       this.isLoadingResults = false;
       // Assign the data to the data source for the table to render
       this.itemsDataSource = new MatTableDataSource(this.allDataObj.InvoiceItem);
+    });
+  }
+
+
+  // Show notification on snackbar
+  showNotification(duration: number, message: string, action: string, route: string, isCloseBtn: boolean, color: string): void {
+    const snackBarRef = this.snackBar.openFromComponent(CustomSnackbarComponent, {
+      duration,
+      data: {
+        message,
+        action,
+        route,
+        isCloseBtn,
+        color,
+        snack: this.snackBar
+      },
     });
   }
 

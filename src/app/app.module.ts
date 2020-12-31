@@ -3,7 +3,7 @@ import { NgModule, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
@@ -46,6 +46,9 @@ import { ViewClientComponent } from './components/clients/view-client/view-clien
 import { CurrencyComponent } from './components/settings/currency/currency.component';
 import { TaxesComponent } from './components/settings/taxes/taxes.component';
 
+
+// Interceptors
+import { ProxyInterceptor } from './interceptors/proxy.interceptor';
 
 
 @NgModule({
@@ -93,7 +96,10 @@ import { TaxesComponent } from './components/settings/taxes/taxes.component';
     DatePipe,
     { provide: DEFAULT_CURRENCY_CODE, useValue: 'EGP' },
     MycurrencyPipe,
-    PercentPipe
+    PercentPipe,
+
+    // Interceptors
+    { provide: HTTP_INTERCEPTORS, useClass: ProxyInterceptor, multi: true}
   ],
   bootstrap: [ AppComponent ]
 })

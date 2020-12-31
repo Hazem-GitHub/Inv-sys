@@ -50,11 +50,12 @@
         
         
         <div class="uk-navbar-item uk-logo">
-            <img src="assets/img/logo.svg" alt="logo" />
-            <!-- <h1>SYSTEM</h1> -->
+            <img src="assets/img/logo-purple.svg" alt="logo" />
+            <h1>system</h1>
         </div>
 
-        <div class="uk-navbar-left uk-margin-small-left">
+        <div class="uk-navbar-left uk-margin-remove-left">
+            
             <button mat-icon-button color="{{ isNavOpened ? 'primary' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
                 <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
                 <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-chevron-right' }}"></i>
@@ -64,7 +65,12 @@
         
         
         <div class="uk-navbar-right uk-margin-small-right">
-            
+            <button mat-button [matMenuTriggerFor]="beforeMenu"><i class="fas fa-plus uk-margin-small-horizontal"></i></button>
+            <mat-menu #beforeMenu="matMenu" xPosition="before">
+                <button mat-menu-item routerLinkActive="active" routerLink="/invoices/new"><i class="fas fa-file-invoice-dollar uk-margin-small-right"></i> Invoice</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/expenses/new"><i class="fas fa-dollar-sign uk-margin-small-right"></i> Expense</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/clients/new"><i class="fas fa-user-tie uk-margin-small-right"></i> Client</button>
+            </mat-menu>
             <!-- <ul class="uk-navbar-nav">
                 <li>
                     <a href="#"><i class="fas fa-bell active"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>

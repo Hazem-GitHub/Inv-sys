@@ -110,6 +110,9 @@ export class TaxesComponent implements OnInit, OnDestroy {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       // Hide Loader on data complete loading

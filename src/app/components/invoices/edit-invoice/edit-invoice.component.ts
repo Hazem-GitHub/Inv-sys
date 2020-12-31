@@ -250,6 +250,9 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
     }, err => {
       // on error
       console.log(err);
+      this.showNotification(15000, 'Error on loading data','Reload', 'none' , false, 'warn');
+      // Hide loader
+      this.isLoadingResults = false;
     }, () => {
       // on complete
       this.editInvoiceForm.controls.dueDate.setValue(new Date(this.allDataObj.DueDate));
@@ -532,6 +535,9 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
       }, err => {
         // on error
         console.log(err);
+        this.showNotification(15000, 'Error on saving changes','Reload', 'none' , false, 'warn');
+        // Hide loader
+        this.isSubmitting = false;
       }, () => {
         // on complete
         // $('.loading-container .spinnerContainer').hide();
@@ -559,6 +565,9 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
             }, err => {
               // on error
               console.log(err);
+              this.showNotification(15000, 'Error on saving changes','Reload', 'none' , false, 'warn');
+              // Hide loader
+              this.isSubmitting = false;
             }, () => {
               // on complete
               // $('.loading-container .spinnerContainer').hide();
@@ -576,6 +585,9 @@ export class EditInvoiceComponent implements OnInit, OnDestroy {
             }, err => {
               // on error
               console.log(err);
+              this.showNotification(15000, 'Error on saving changes','Reload', 'none' , false, 'warn');
+              // Hide loader
+              this.isSubmitting = false;
             }, () => {
               // on complete
               // $('.loading-container .spinnerContainer').hide();

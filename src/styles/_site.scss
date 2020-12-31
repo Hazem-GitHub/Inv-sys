@@ -1,4 +1,5 @@
 /* Custom SCSS/SASS Files */
+@import 'theme/material.theme';
 @import 'variables';
 @import 'mixins';
 @import 'keyframes';
@@ -371,9 +372,9 @@ table.uk-table {
     thead{
         
         tr{
-            border: 1px solid $app-primary-color!important;
+            border: 2px solid $app-primary-color!important;
             th{
-                padding: 14px 14px!important;
+                padding: 12px 14px!important;
                 border: 0px solid $dark-gray-color!important;
                 color: $app-primary-color!important;
                 font-weight: 700!important;
@@ -381,7 +382,8 @@ table.uk-table {
                 font-size: 12px!important;
                 min-width: 100px;
                 &:first-of-type{
-                    min-width: 30px;
+                    padding: 12px 12px!important;
+                    min-width: 30px!important;
                     // text-align: center;
                 }
             }
@@ -390,10 +392,10 @@ table.uk-table {
     tbody{
         tr{
             transition: all 0.3s ease-out!important;
-            border: 1px solid $very-light-gray-color!important;
+            border: 2px solid $very-light-gray-color!important;
             &:hover,
             &:focus{
-                background-color: rgba($very-light-gray-color, 0.8)!important;
+                background-color: rgba($very-light-gray-color, 0.5)!important;
             }
             td{
                 padding: 12px 14px!important;
@@ -403,7 +405,7 @@ table.uk-table {
                 font-weight: 500!important;
                 font-size: 12px!important;
                 width:auto!important;
-                min-width: 30px!important;
+                min-width: 100px!important;
                 border: 0px solid $very-light-gray-color!important;
                 .uk-icon-button{
                     width:auto!important;
@@ -415,7 +417,8 @@ table.uk-table {
                     }
                 }
                 &:first-of-type{
-                    min-width: 30px;
+                    padding: 12px 12px!important;
+                    min-width: 30px!important;
                     // text-align: center!important;
                 }
             }
