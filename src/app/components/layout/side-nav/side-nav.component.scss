@@ -15,8 +15,9 @@
     // width: auto;
     // top: 100px;
     height:calc(100vh - 80px);
-    background: rgb(93,6,130);
-    background: linear-gradient(0deg, rgba(93,6,130,0.03) 0%, rgba(255,255,255,1) 100%);
+    // background: rgb(93,6,130);
+    // background: linear-gradient(0deg, rgba(93,6,130,0.03) 0%, rgba(255,255,255,1) 100%);
+    background: $app-secondary-color;
     padding: 0;
     border-right: 0px solid $very-light-gray-color;
     // transition: width 0.3s ease-out;
