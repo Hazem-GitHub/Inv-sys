@@ -392,10 +392,10 @@ table.uk-table {
     tbody{
         tr{
             transition: all 0.3s ease-out!important;
-            border: 2px solid $very-light-gray-color!important;
+            border: 2px solid $light-gray-color!important;
             &:hover,
             &:focus{
-                background-color: rgba($very-light-gray-color, 0.5)!important;
+                background-color: rgba($very-light-gray-color, 1)!important;
             }
             td{
                 padding: 12px 14px!important;
