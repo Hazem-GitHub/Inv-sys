@@ -1,9 +1,12 @@
+<div class="top-header-padding uk-margin-medium-top">
+    <h3><strong>VAT List</strong></h3>
+</div>
 <div class="table-container container-full-width uk-padding-remove-horizontal">
     <div *ngIf="isLoadingResults">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     
-    <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "taxForm" (ngSubmit)="onSubmitHandler()">
+    <form class="uk-form uk-form-width-large uk-width-full  uk-padding-remove-horizontal" [formGroup]= "taxForm" (ngSubmit)="onSubmitHandler()">
         <div formArrayName="taxItems">
             <table mat-table [dataSource]="taxDataSource" class="mat-elevation-z0 padding-table uk-table">
         

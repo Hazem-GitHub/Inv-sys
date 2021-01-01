@@ -54,22 +54,22 @@
             <h1>system</h1>
         </div>
 
-        <div class="uk-navbar-left uk-margin-remove-left">
+        <div class="uk-navbar-left uk-margin-small-left uk-padddding-remove">
             
-            <button mat-icon-button color="{{ isNavOpened ? 'primary' : 'primary' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
+            <button mat-icon-button color="{{ isNavOpened ? 'primary' : 'basic' }}" class="" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
                 <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
-                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-chevron-right' }}"></i>
+                <i class="fas {{ isNavOpened ? 'fa-bars' : 'fa-bars' }}"></i>
             </button>
             <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i> {{ pageTitle }}</span>
         </div>
         
         
         <div class="uk-navbar-right uk-margin-small-right">
-            <button mat-button [matMenuTriggerFor]="beforeMenu"><i class="fas fa-plus uk-margin-small-horizontal"></i></button>
+            <button mat-raised-button color="basic" [matMenuTriggerFor]="beforeMenu"><i class="fas fa-plus uk-margin-small-horizontal"></i></button>
             <mat-menu #beforeMenu="matMenu" xPosition="before">
-                <button mat-menu-item routerLinkActive="active" routerLink="/invoices/new"><i class="fas fa-file-invoice-dollar uk-margin-small-right"></i> Invoice</button>
-                <button mat-menu-item routerLinkActive="active" routerLink="/expenses/new"><i class="fas fa-dollar-sign uk-margin-small-right"></i> Expense</button>
-                <button mat-menu-item routerLinkActive="active" routerLink="/clients/new"><i class="fas fa-user-tie uk-margin-small-right"></i> Client</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/invoices/new"><i class="fas fa-file-invoice-dollar uk-margin-small-right"></i> New Invoice</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/expenses/new"><i class="fas fa-dollar-sign uk-margin-small-right"></i> New Expense</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/clients/new"><i class="fas fa-user-tie uk-margin-small-right"></i> New Client</button>
             </mat-menu>
             <!-- <ul class="uk-navbar-nav">
                 <li>

@@ -1,9 +1,14 @@
+<div class="top-header-padding uk-margin-medium-top">
+    <h3><strong>Currencies List</strong></h3>
+</div>
 <div class="table-container container-full-width uk-padding-remove-horizontal">
+
+    
     <div *ngIf="isLoadingResults">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
     
-    <form class="uk-form uk-form-width-large uk-width-full" [formGroup]= "currencyForm" (ngSubmit)="onSubmitHandler()">
+    <form class="uk-form uk-form-width-large uk-width-full uk-padding-remove-horizontal" [formGroup]= "currencyForm" (ngSubmit)="onSubmitHandler()">
         <div formArrayName="currencyItems">
             <table mat-table [dataSource]="currencyDataSource" class="mat-elevation-z0 padding-table uk-table">
         
