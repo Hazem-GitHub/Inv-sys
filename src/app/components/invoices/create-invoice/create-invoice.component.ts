@@ -64,7 +64,7 @@ declare var $;
 })
 
 export class CreateInvoiceComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Create new invoice';
+  pageTitle: string = 'New invoice';
   pageIcon: string =  'fa-file-invoice-dollar';
 
   // Loader

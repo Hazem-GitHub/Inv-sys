@@ -34,7 +34,7 @@ declare var $;
 })
 
 export class CreateExpenseComponent implements OnInit, OnDestroy {
-  pageTitle: string = 'Create new expense';
+  pageTitle: string = 'New expense';
   pageIcon: string =  'fa-dollar-sign';
 
   // For loader

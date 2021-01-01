@@ -24,7 +24,7 @@ declare var $;
 })
 
 export class CreateClientComponent implements OnInit {
-  pageTitle: string = 'Create new client';
+  pageTitle: string = 'New client';
   pageIcon: string =  'fa-user-tie';
 
   // For loader
