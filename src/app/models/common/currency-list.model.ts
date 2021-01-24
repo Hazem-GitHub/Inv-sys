@@ -1,6 +1,6 @@
-export class CurrencyList{
-    EGP: number = 0;
-    USD: number = 1;
-    EUR: number = 2;
-    GBP: number = 3;
+export interface CurrencyList{
+    EGP: number,
+    USD: number,
+    EUR: number,
+    GBP: number
 }

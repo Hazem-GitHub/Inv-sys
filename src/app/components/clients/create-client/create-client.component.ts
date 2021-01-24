@@ -1,3 +1,4 @@
+import { Client } from './../../../models/clients/client.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 
@@ -67,7 +68,9 @@ export class CreateClientComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]],
       fax: ['', Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)],
       website: ['', Validators.maxLength(200)],
-      typeId: ['', Validators.required]
+      typeId: ['', Validators.required],
+      brand: ['', [Validators.required, Validators.maxLength(50)]],
+      contactPerson: ['', Validators.maxLength(50)],
     });
 
     this.clientsService.getClientTypes().subscribe(data => {
@@ -105,7 +108,9 @@ export class CreateClientComponent implements OnInit {
       Phone: '',
       Fax: '',
       Website: '',
-      TypeId: 0,
+      ClientTypeId: 0,
+      Brand: '',
+      ContactPerson: '',
     };
 
     // filling detailsObj with form data to be send to proceedClient method in clients.service.ts
@@ -116,7 +121,9 @@ export class CreateClientComponent implements OnInit {
     detailsObj.Phone = this.newClientForm.value.phone;
     detailsObj.Fax = this.newClientForm.value.fax;
     detailsObj.Website = this.newClientForm.value.website;
-    detailsObj.TypeId = this.newClientForm.value.typeId;
+    detailsObj.ClientTypeId = this.newClientForm.value.typeId;
+    detailsObj.Brand = this.newClientForm.value.brand;
+    detailsObj.ContactPerson = this.newClientForm.value.contactPerson;
     console.log(detailsObj);
 
     this.clientsService.proceedClient( detailsObj ).subscribe(data => {

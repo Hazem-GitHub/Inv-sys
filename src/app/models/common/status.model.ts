@@ -1,4 +1,4 @@
-export class Status{
-    StatusId: number;
-    Statu: string;
+export interface Status{
+    StatusId: number
+    Statu: string,
 }

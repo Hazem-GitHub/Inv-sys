@@ -56,21 +56,22 @@
 
         <div class="uk-navbar-left uk-margin-small-left uk-padddding-remove">
             
-            <button mat-icon-button color="{{ isNavOpened ? 'primary' : 'primary' }}" class="bg-accent" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
-                <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
-                <i class="fas {{ isNavOpened ? 'fa-chevron-left' : 'fa-bars' }}"></i>
-            </button>
+            
             <span class="uk-margin-small-left page-title"><i class="fas {{ pageIcon }}"></i> {{ pageTitle }}</span>
         </div>
         
         
         <div class="uk-navbar-right uk-margin-small-right">
-            <button mat-flat-button color="basic" class="bg-accent" [matMenuTriggerFor]="beforeMenu"><i class="fas fa-plus uk-margin-small-horizontal"></i> New</button>
+            <button mat-icon-button color="basic" class="bg-accent" [matMenuTriggerFor]="beforeMenu"><i class="fas fa-plus uk-padding-small-horizontal"></i></button>
             <mat-menu #beforeMenu="matMenu" xPosition="before">
-                <button mat-menu-item routerLinkActive="active" routerLink="/invoices/new"><i class="fas fa-file-invoice-dollar uk-margin-small-right"></i> New Invoice</button>
-                <button mat-menu-item routerLinkActive="active" routerLink="/expenses/new"><i class="fas fa-dollar-sign uk-margin-small-right"></i> New Expense</button>
-                <button mat-menu-item routerLinkActive="active" routerLink="/clients/new"><i class="fas fa-user-tie uk-margin-small-right"></i> New Client</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/invoices/new"><i class="fas fa-file-invoice-dollar uk-margin-small-right"></i> Create New Invoice</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/expenses/new"><i class="fas fa-dollar-sign uk-margin-small-right"></i> Create New Expense</button>
+                <button mat-menu-item routerLinkActive="active" routerLink="/clients/new"><i class="fas fa-user-tie uk-margin-small-right"></i> Create New Client</button>
             </mat-menu>
+            <button mat-icon-button color="{{ isNavOpened ? 'basic' : 'basic' }}" class="bg-accent uk-margin-small-right uk-margin-small-left" (click)="toggleSideNav()" matTooltip="{{ isNavOpened ? 'Hide menu' : 'Show menu' }}" matTooltipPosition="below">
+                <!-- <i class="fas fa-bars uk-margin-small-horizontal"></i> -->
+                <i class="fas {{ isNavOpened ? 'fa-bars' : 'fa-bars' }} uk-padding-small-right"></i>
+            </button>
             <!-- <ul class="uk-navbar-nav">
                 <li>
                     <a href="#"><i class="fas fa-bell active"></i><span class="uk-icon-button" uk-icon="icon: triangle-down; ratio: 1"></span></a>

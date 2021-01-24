@@ -30,12 +30,12 @@ export class ClientsService {
   }
   // Create New Client
   proceedClient(detailsObj: any): Observable<any>{
-    const endpoint = `/api/CreateClient?Name=${ detailsObj.Name}&Address=${detailsObj.Address }&Email=${ detailsObj.Email}&Phone=${detailsObj.Phone }&Fax=${ detailsObj.Fax}&Website=${detailsObj.Website }&TypeId=${detailsObj.TypeId }`;
+    const endpoint = `/api/CreateClient?Name=${ detailsObj.Name}&Address=${detailsObj.Address }&Email=${ detailsObj.Email}&Phone=${detailsObj.Phone }&Fax=${ detailsObj.Fax}&Website=${detailsObj.Website }&TypeId=${detailsObj.ClientTypeId }&ContactPerson=${detailsObj.ContactPerson }&Brand=${detailsObj.Brand }`;
     return this.http.get<any>(endpoint);
   }
   // Edit Client
   editClient(detailsObj: any, clientId: number): Observable<any>{
-    const endpoint = `/api/EditClient?ClientId=${ clientId }&Name=${ detailsObj.Name}&Address=${detailsObj.Address }&Email=${ detailsObj.Email}&Phone=${detailsObj.Phone }&Fax=${ detailsObj.Fax}&Website=${detailsObj.Website }&TypeId=${detailsObj.TypeId }`;
+    const endpoint = `/api/EditClient?ClientId=${ clientId }&Name=${ detailsObj.Name}&Address=${detailsObj.Address }&Email=${ detailsObj.Email}&Phone=${detailsObj.Phone }&Fax=${ detailsObj.Fax}&Website=${detailsObj.Website }&TypeId=${detailsObj.ClientTypeId }&ContactPerson=${detailsObj.ContactPerson }&Brand=${detailsObj.Brand }`;
     return this.http.get<any>(endpoint);
   }
   // Delete Client

@@ -21,6 +21,7 @@ export const MY_FORMATS = {
 };
 
 /*Models */
+import { Expense, ExpenseType } from '../../../models/expenses/expense.model';
 import { Invoice } from '../../../models/invoices/invoice.model';
 import { Currency } from '../../../models/common/currency.model';
 import { Status } from '../../../models/common/status.model';
@@ -29,6 +30,7 @@ import { ClientShort } from '../../../models/clients/client.short.model';
 /*Services */
 import { PageTitleService } from '../../../services/page-title.service';
 import { InvoicesService } from '../../../services/invoices.service';
+import { ExpensesService } from '../../../services/expenses.service';
 import { ClientsService } from '../../../services/clients.service';
 import { CurrencyService } from '../../../services/currency.service';
 import { StatusService } from '../../../services/status.service';
@@ -69,6 +71,7 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
 
   // Loader
   isCalculatingResults = true;
+  
   isLoadingResults = true;
 
   // Submit Button
@@ -79,6 +82,7 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
   newInvoiceForm: FormGroup;
 
   currentDate: Date = new Date();
+  lastIssuedDate: Date;
   minDueDate: Date;
 
   clientsList: ClientShort[];
@@ -114,34 +118,42 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
   createNewInvoiceItemObservable: any;
   proceedInvoiceObservable: any;
 
-  // detailsObj: {
-  //   DueDate: string,
-  //   ClientId: number,
-  //   ProjectName: string,
-  //   Description: string,
-  //   PaymentMethodId: number,
-  //   CurrencyId: number,
-  //   StatusId: number,
-  //   Taxed: boolean,
-  //   TaxId: number
-  // };
-
-  // totalsObj: {
-  //   TotalAmount: number,
-  //   PaidAmount: number,
-  //   DueAmount: number,
-  //   SubTotal: number,
-  // };
-
   invoiceItemsArr: any[];
   createdInvoiceId: number;
 
   // sticky
   isSticky = false;
 
+  // Expenses
+
+  isCalculatingExpenseResults = false;
+
+  includeExpenses: boolean = false;
+
+  newExpenseForm: FormGroup;
+
+  ExpensesTypesList: ExpenseType[];
+  selectedExpenseTypeId: number;
+  selectedExpenseTypeValue: string;
+
+  totalExpenseAmount: number;
+
+  expenseItemsArr: any[];
+  createdExpenseId: number;
+
+  displayedExpenseColumns: string[] = [ 'index', 'name', 'comments', 'unitPrice', 'quantity', 'vatAmounts', 'actions'];
+  expenseItemsDataSource: any;
+
+  expenseTypeList: any;
+  currencyObservable: any;
+  valueChangesExpensesOnInitObservable: any;
+  proceedExpenseObservable: any;
+  createNewExpenseItemObservable: any;
+
   constructor(
     private pageTitleService: PageTitleService,
     private invoicesService: InvoicesService,
+    private expensesService: ExpensesService,
     private clientsService: ClientsService,
     private currencyService: CurrencyService,
     private statusService: StatusService,
@@ -156,6 +168,16 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+
+    this.invoicesService.getLastIssuedDate().subscribe((lastIssued) => {
+      this.lastIssuedDate = lastIssued;
+    }, (err) => {
+      // on error
+      console.log(err);
+    }, () => {
+
+    });
+
     // Handling on Init
     if ( globalThis.innerWidth < 1200 ) {
       this.isSticky = true;
@@ -177,6 +199,7 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
 
     // form
     this.newInvoiceForm = this.fb.group({
+      createDate: ['', Validators.required],
       dueDate: ['', Validators.required],
       client: ['', Validators.required],
       projectName: ['', [Validators.required, Validators.maxLength(50)]],
@@ -199,28 +222,58 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
 
     this.valueChangesOnInitObservable = this.newInvoiceForm.valueChanges.subscribe(formData => {
       // console.log(formData);
-      this.isCalculatingResults = true;
-      this.subTotalAmount = this.calcInvoiceSubTotal(formData.invoiceItems);
-      if ( this.newInvoiceForm.value.taxRate ) {
-        // if(this.newInvoiceForm.value.taxRate) {}
-        this.taxRateObservable = this.taxRateService.getTaxRate(this.newInvoiceForm.value.taxRate).subscribe( data => {
-        this.taxRateValue = data.ViewTaxResult[0].TaxRate;
-        this.taxName = data.ViewTaxResult[0].TaxName;
-        }, err => {
-          // on error
-          console.log(err);
-        }, () => {
-          // on complete
-          if ( this.newInvoiceForm.value.taxes ) {
-            this.totalAmount = this.subTotalAmount * ( 1 + ( this.taxRateValue / 100 ));
-            this.isTaxed = true;
-          }else{
-            this.totalAmount = this.subTotalAmount;
-            this.isTaxed = false;
-          }
+      
+      if ( this.newInvoiceForm.value.invoiceItems.length > 0 && this.newInvoiceForm.value.currency ) {
+        this.isCalculatingResults = true;
+        this.subTotalAmount = this.calcInvoiceSubTotal(formData.invoiceItems);
+        if ( this.newInvoiceForm.value.taxRate ) {
+          // if(this.newInvoiceForm.value.taxRate) {}
+          this.taxRateObservable = this.taxRateService.getTaxRate(this.newInvoiceForm.value.taxRate).subscribe( data => {
+          this.taxRateValue = data.ViewTaxResult[0].TaxRate;
+          this.taxName = data.ViewTaxResult[0].TaxName;
+          }, err => {
+            // on error
+            console.log(err);
+          }, () => {
+            // on complete
+            if ( this.newInvoiceForm.value.taxes ) {
+              this.totalAmount = this.subTotalAmount * ( 1 + ( this.taxRateValue / 100 ));
+              this.isTaxed = true;
+            }else{
+              this.totalAmount = this.subTotalAmount;
+              this.isTaxed = false;
+            }
+            this.paidAmount = formData.paidAmount;
+            this.dueAmount = this.totalAmount - this.paidAmount;
+  
+            this.newInvoiceForm.controls.paidAmount.setValidators([
+              Validators.required,
+              Validators.min(0),
+              Validators.max(this.totalAmount)
+            ]);
+            // in order to take effect
+            this.newInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
+            this.newInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
+            if (this.newInvoiceForm.value.currency) {
+              console.log(this.newInvoiceForm.value.currency);
+              this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
+                this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
+              }, err => {
+                // on error
+                console.log(err);
+              }, () => {
+                // on complete
+                // $('.loading-container .spinnerContainer').hide();
+                this.isCalculatingResults = false;
+              });
+            }
+          });
+        }else{
+          this.totalAmount = this.subTotalAmount;
+          this.isTaxed = false;
           this.paidAmount = formData.paidAmount;
           this.dueAmount = this.totalAmount - this.paidAmount;
-
+  
           this.newInvoiceForm.controls.paidAmount.setValidators([
             Validators.required,
             Validators.min(0),
@@ -229,8 +282,8 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
           // in order to take effect
           this.newInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
           this.newInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
+          console.log(this.newInvoiceForm.value.currency);
           if (this.newInvoiceForm.value.currency) {
-            console.log(this.newInvoiceForm.value.currency);
             this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
               this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
             }, err => {
@@ -242,36 +295,10 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
               this.isCalculatingResults = false;
             });
           }
-        });
-      }else{
-        this.totalAmount = this.subTotalAmount;
-        this.isTaxed = false;
-        this.paidAmount = formData.paidAmount;
-        this.dueAmount = this.totalAmount - this.paidAmount;
-
-        this.newInvoiceForm.controls.paidAmount.setValidators([
-          Validators.required,
-          Validators.min(0),
-          Validators.max(this.totalAmount)
-        ]);
-        // in order to take effect
-        this.newInvoiceForm.controls.paidAmount.updateValueAndValidity({onlySelf: true, emitEvent: false});
-        this.newInvoiceForm.updateValueAndValidity({onlySelf: true, emitEvent: false});
-        console.log(this.newInvoiceForm.value.currency);
-        if (this.newInvoiceForm.value.currency) {
-          this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
-            this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
-          }, err => {
-            // on error
-            console.log(err);
-          }, () => {
-            // on complete
-            // $('.loading-container .spinnerContainer').hide();
-            this.isCalculatingResults = false;
-          });
+          
         }
-        
       }
+      
     }, err => {
       // on error
       console.log(err);
@@ -283,6 +310,56 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
     this.addInvoiceItem();
     this.isLoadingResults = false;
     this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
+
+
+
+    // Expenses
+    // form
+    this.newExpenseForm = this.fb.group({
+      expenseType: ['', Validators.required],
+      // client: ['', Validators.required],
+      expenseDescription: ['', Validators.maxLength(500)],
+      // currency: ['', Validators.required],
+      expenseItems: this.fb.array([], Validators.required)
+    });
+
+    this.valueChangesExpensesOnInitObservable = this.newExpenseForm.valueChanges.subscribe(formData => {
+      // console.log(formData);
+      
+      if ( this.newExpenseForm.value.expenseItems.length > 0 && this.newInvoiceForm.value.currency ) {
+        this.isCalculatingExpenseResults = true;
+        this.totalExpenseAmount = this.calcExpenseSubTotal(formData.expenseItems);
+        this.currencyObservable = this.currencyService.getCurrency(this.newInvoiceForm.value.currency).subscribe(data => {
+          this.currentCurrencyValue = data.ViewCurrencyResult[0].Name;
+        }, err => {
+          // on error
+          console.log(err);
+        }, () => {
+          // on complete
+          // $('.loading-container .spinnerContainer').hide();
+          this.isCalculatingExpenseResults = false;
+          this.isLoadingResults = false;
+          this.currencyObservable.unsubscribe();
+        });
+
+      }
+
+      // Change Description to Comments
+      // change UnitPrice to Salary
+      // Set Quantity to 1 and hide it
+      // this.selectedExpenseTypeValue = this.newExpenseForm.value.
+    }, err => {
+      // on error
+      console.log(err);
+    }, () => {
+      // on complete
+      this.valueChangesExpensesOnInitObservable.unsubscribe();
+    });
+    // console.log(this.newExpenseForm.valid);
+    // Add one invoice item by default
+    this.addExpenseItem();
+
+
   }// End of OnInit
 
   ngOnDestroy(): void{
@@ -364,13 +441,29 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
       // $('.loading-container .spinnerContainer').hide();
       this.taxRateListObservable.unsubscribe();
     });
+
+    // get expense types list
+    this.expenseTypeList = this.expensesService.getExpensesTypes().subscribe(data => {
+      // $('.loading-container .spinnerContainer').show();
+      // console.log(data.GetStatuResult);
+      this.ExpensesTypesList = data.GetExpenseTypeResult;
+    }, err => {
+      // on error
+      console.log(err);
+    }, () => {
+      // on complete
+      // $('.loading-container .spinnerContainer').hide();
+      this.expenseTypeList.unsubscribe();
+    });
   }
+
 
   /* Handlers */
   onSubmitHandler(): void {
     // $('#submit-btn-container .loading-container').show();
     this.isSubmitting = true;
     const detailsObj = {
+      CreateDate: '',
       DueDate: '',
       ClientId: 0,
       ProjectName: '',
@@ -388,11 +481,15 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
       DueAmount: 0,
       SubTotal: 0,
     };
+
+    
     // 1. filling invoiceItemsArr with my invoice items
     this.invoiceItemsArr = [...this.newInvoiceForm.value.invoiceItems];
+    
 
     // 2. filling detailsObj with form data to be send to proceedInvoice method in invoices.service.ts
 
+    detailsObj.CreateDate =  moment(this.newInvoiceForm.value.createDate).format('MM/DD/YYYY');
     detailsObj.DueDate =  moment(this.newInvoiceForm.value.dueDate).format('MM/DD/YYYY');
     detailsObj.ClientId = this.newInvoiceForm.value.client;
     detailsObj.ProjectName = this.newInvoiceForm.value.projectName;
@@ -403,12 +500,15 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
     detailsObj.Taxed = this.newInvoiceForm.value.taxes;
     detailsObj.TaxId = this.newInvoiceForm.value.taxRate || 0;
 
+ 
+
     // totalsObj.PaidAmount = this.newInvoiceForm.value.paidAmount;
 
     // 3. calculate Subtotals:
     totalsObj.SubTotal = this.calcInvoiceSubTotal(this.newInvoiceForm.value.invoiceItems);
     totalsObj.SubTotal = totalsObj.SubTotal;
     this.subTotalAmount = totalsObj.SubTotal;
+    
 
     // 4. subscribe to: getTaxRate VALUE
     this.taxRateObservable = this.taxRateService.getTaxRate(detailsObj.TaxId).subscribe( data => {
@@ -448,7 +548,7 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
       }, () => {
         // on complete
         // $('.loading-container .spinnerContainer').hide();
-        // 9. get invoiceId and pass it to subscribe to: createInvoiceItem
+        // get invoiceId and pass it to subscribe to: createInvoiceItem
         // loop through items
         for (const invoiceItem of this.invoiceItemsArr) {
           const createNewInvoiceItemObservable = this.invoicesService.createInvoiceItem(invoiceItem, this.createdInvoiceId)
@@ -457,24 +557,104 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
           }, err => {
             // on error
             console.log(err);
-          }, () => {
-            // on complete
-            // $('.loading-container .spinnerContainer').hide();
             this.createNewInvoiceItemObservable.unsubscribe();
             this.showNotification(15000, 'Error on creating invoice','Reload', 'none' , false, 'warn');
             // Hide loader
             this.isSubmitting = false;
+          }, () => {
+            // on complete
+            // $('.loading-container .spinnerContainer').hide();
+            this.createNewInvoiceItemObservable.unsubscribe();
           });
         }
-        this.isSubmitting = false;
-        this.showNotification(
-          15000,
-          `New invoice with ID # ${ this.createdInvoiceId } has been Created successfully`,
-          `Review invoice`, `/invoices/view/${this.createdInvoiceId}`,
-          true,
-          'primary'
-        );
-        this.proceedInvoiceObservable.unsubscribe();
+
+        // subscribe to: proceedExpense
+        // console.log(detailsObj);
+        // console.log(totalsObj);
+        if (this.includeExpenses) {
+
+          const detailsExpensesObj = {
+            InvoiceId: this.createdInvoiceId,
+            ClientId: 0,
+            TypeId: 0,
+            Description: '',
+            CurrencyId: 0
+          };
+      
+          const totalsExpensesObj = {
+            TotalAmount: 0,
+          };
+          // filling expenseItemsArr with my expense items
+          this.expenseItemsArr = [...this.newExpenseForm.value.expenseItems];
+          // filling detailsObj with form data to be send to proceedExpense method in expenses.service.ts
+      
+          detailsExpensesObj.ClientId = this.newInvoiceForm.value.client;
+          detailsExpensesObj.TypeId = this.newExpenseForm.value.expenseType;
+          detailsExpensesObj.Description = this.newExpenseForm.value.expenseDescription;
+          detailsExpensesObj.CurrencyId = this.newInvoiceForm.value.currency;
+          // calculate Subtotals:
+          totalsExpensesObj.TotalAmount = this.calcExpenseSubTotal(this.newExpenseForm.value.expenseItems);
+          this.totalExpenseAmount =  totalsExpensesObj.TotalAmount;
+
+
+          this.proceedExpenseObservable = this.expensesService.proceedExpense( detailsExpensesObj, totalsExpensesObj ).subscribe(data => {
+            this.createdExpenseId = data.CreateExpenseResult;
+          }, err => {
+            // on error
+            console.log(err);
+            this.showNotification(15000, 'Error on creating expense','Reload', 'none' , false, 'warn');
+            // Hide loader
+            this.isSubmitting = false;
+          }, () => {
+            // on complete
+            // $('.loading-container .spinnerContainer').hide();
+            
+            
+            // get expenseId and pass it to subscribe to: CreateExpenseItem
+            // loop through items
+            for (const expenseItem of this.expenseItemsArr) {
+              this.createNewExpenseItemObservable = this.expensesService.createExpenseItem(expenseItem, this.createdExpenseId)
+              .subscribe(result => {
+                // console.log(result);
+              }, err => {
+                // on error
+                console.log(err);
+                this.showNotification(15000, 'Error on creating expense','Reload', 'none' , false, 'warn');
+                // Hide loader
+                this.isSubmitting = false;
+              }, () => {
+                // on complete
+                // $('.loading-container .spinnerContainer').hide();
+                
+                this.createNewExpenseItemObservable.unsubscribe();
+              });
+            }
+  
+            this.isSubmitting = false;
+            this.showNotification(
+              15000,
+              `New invoice with ID # ${ this.createdInvoiceId } has been Created successfully`,
+              `Review invoice`, `/invoices/view/${this.createdInvoiceId}`,
+              true,
+              'primary'
+            );
+            this.proceedExpenseObservable.unsubscribe();
+            this.proceedInvoiceObservable.unsubscribe();
+            
+          });
+        }else{
+          this.isSubmitting = false;
+          this.showNotification(
+            15000,
+            `New invoice with ID # ${ this.createdInvoiceId } has been Created successfully`,
+            `Review invoice`, `/invoices/view/${this.createdInvoiceId}`,
+            true,
+            'primary'
+          );
+          this.proceedInvoiceObservable.unsubscribe();
+        }
+        
+        
       });
       this.taxRateObservable.unsubscribe();
     });
@@ -485,6 +665,11 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
   /* Retrieve Invoice Items from the Form */
   get invoiceItemsForms(): FormArray{
     return this.newInvoiceForm.get('invoiceItems') as FormArray;
+  }
+
+  /* Retrieve Expense Items from the Form */
+  get expenseItemsForms(): FormArray{
+    return this.newExpenseForm.get('expenseItems') as FormArray;
   }
 
 
@@ -500,11 +685,32 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
     this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
   }
 
+  /* Add Expense Items on Click Add item button */
+  addExpenseItem(): void {
+    const expenseItem = this.fb.group({
+      itemName: ['', [Validators.required, Validators.maxLength(50)]],
+      itemDescription: ['', Validators.maxLength(500)],
+      unitPrice: [0, [Validators.required, Validators.min(0)]],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      vat: [0, Validators.min(0)]
+    });
+    this.expenseItemsForms.push(expenseItem);
+    console.log(this.newExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.newExpenseForm.value.expenseItems);
+  }
+
 
   /* Remove Invoice Items on Click Remove item button */
   removeInvoiceItem(i): void {
     this.invoiceItemsForms.removeAt(i);
     this.invoiceItemsDataSource = new MatTableDataSource(this.newInvoiceForm.value.invoiceItems);
+  }
+
+  /* Remove expense Items on Click Remove item button */
+  removeExpenseItem(i): void {
+    this.expenseItemsForms.removeAt(i);
+    console.log(this.newExpenseForm.value.expenseItems);
+    this.expenseItemsDataSource = new MatTableDataSource(this.newExpenseForm.value.expenseItems);
   }
 
   // Calculating SUBTOTAL from items
@@ -523,6 +729,31 @@ export class CreateInvoiceComponent implements OnInit, OnDestroy {
     }
     calculatedValue = subTotalArr.reduce(this.getSum, 0);
     return calculatedValue;
+  }
+
+  // Calculating SUBTOTAL from items
+  calcExpenseSubTotal(expenseItems: any[]): number{
+    let calculatedValue: number = 0;
+    let quantity: number = 0;
+    let unitPrice: number = 0;
+    let vatValue: number = 0;
+    let total: number = 0;
+    const subTotalArr: any[] = [];
+    // looping over items to get subtotal amount
+    for ( const item of expenseItems){
+      quantity = item.quantity;
+      unitPrice = item.unitPrice;
+      vatValue = item.vat;
+      total = vatValue + (quantity * unitPrice);
+      subTotalArr.push(total);
+    }
+    calculatedValue = subTotalArr.reduce(this.getSum, 0);
+    return calculatedValue;
+  }
+
+
+  expensesIncluded() {
+    this.includeExpenses = !this.includeExpenses;
   }
 
   /* Helper functions */

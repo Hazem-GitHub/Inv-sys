@@ -40,8 +40,22 @@
                                     
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="fieldWrapper">
                             <div class="uk-margin">
-                                <label class="uk-form-label" for="mat-input-1">{{ selectedType === 1? 'Organization' : 'Client' }} Name</label>
+                                <label class="uk-form-label">Brand</label>
+                                <div class="uk-form-controls">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
+                                        <mat-label>Brand Name</mat-label>
+                                        <input matInput placeholder="Brand Name" type="text" formControlName="brand" #brandName/>
+                                        <mat-hint align="end">{{brandName.value.length}} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                
+                            </div>
+                            <div class="uk-margin">
+                                <label class="uk-form-label" for="mat-input-1">{{ selectedType === 1? 'Organization' : 'Client' }} Client Name</label>
                                 <div class="uk-form-controls">
                                     <mat-form-field floatLabel="auto" appearance="fill">
                                         <mat-label>{{ selectedType === 1? 'Organization' : 'Client' }} name</mat-label>
@@ -52,9 +66,18 @@
                                 
                             </div>
                         </div>
-                        
 
                         <div class="fieldWrapper">
+                            <div class="uk-margin">
+                                <label class="uk-form-label">Contact Person</label>
+                                <div class="uk-form-controls">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
+                                        <mat-label>Contact Person</mat-label>
+                                        <input matInput placeholder="Contact Person" type="text" formControlName="contactPerson" #contactPerson/>
+                                        <mat-hint align="end">{{contactPerson.value.length}} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                             <div class="uk-margin">
                                 <label class="uk-form-label">E-mail</label>
                                 <div class="uk-form-controls">
@@ -64,6 +87,12 @@
                                     </mat-form-field>
                                 </div>
                             </div>
+                            
+                        </div>
+                        
+
+                        <div class="fieldWrapper">
+                            
                             <div class="uk-margin">
                                 <label class="uk-form-label">Phone</label>
                                 <div class="uk-form-controls">
@@ -73,21 +102,6 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                        </div>
-                        
-
-                        <div class="fieldWrapper">
-                            <div class="uk-margin">
-                                <label class="uk-form-label">Address</label>
-                                <div class="uk-form-controls">
-                                    <mat-form-field floatLabel="auto" appearance="fill">
-                                        <mat-label>Address</mat-label>
-                                        <input matInput placeholder="Address" type="text" formControlName="address" #address/>
-                                        <mat-hint align="end">{{address.value.length}} / 200</mat-hint>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            
                             <div class="uk-margin">
                                 <label class="uk-form-label">Fax</label>
                                 <div class="uk-form-controls">
@@ -103,6 +117,16 @@
 
                         <div class="fieldWrapper">
                             <div class="uk-margin">
+                                <label class="uk-form-label">Address</label>
+                                <div class="uk-form-controls">
+                                    <mat-form-field floatLabel="auto" appearance="fill">
+                                        <mat-label>Address</mat-label>
+                                        <input matInput placeholder="Address" type="text" formControlName="address" #address/>
+                                        <mat-hint align="end">{{address.value.length}} / 200</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
                                 <label class="uk-form-label">Website</label>
                                 <div class="uk-form-controls">
                                     <mat-form-field floatLabel="auto" appearance="fill">
@@ -113,7 +137,9 @@
                                 </div>
                                 
                             </div>
+                            
                         </div>
+                        
                         
                         
                     </div>

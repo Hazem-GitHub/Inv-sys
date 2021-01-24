@@ -65,45 +65,52 @@
         <table mat-table [dataSource]="dataSource" *ngIf="allDataArr?.length != 0" id="ExpensesTable" class="uk-table"  matSort matSortActive="ClientId" matSortDirection="desc">
     
             <!--1 id Column -->
-            <ng-container matColumnDef="ClientId">
+            <ng-container matColumnDef="clientId">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
                 <td mat-cell *matCellDef="let item">{{item.ClientId}}</td>
             </ng-container>
     
-            <!--2 type column -->
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef>Type</th>
+            <!--2 Client Type column -->
+            <ng-container matColumnDef="clientType">
+                <th mat-header-cell *matHeaderCellDef>Client Type</th>
                 <td mat-cell *matCellDef="let item">{{item.ClientType}}</td>
             </ng-container>
+
+            <!--3 Brand column -->
+            <ng-container matColumnDef="brand">
+                <th mat-header-cell *matHeaderCellDef>Brand Name</th>
+                <td mat-cell *matCellDef="let item">{{item.Brand}}</td>
+            </ng-container>
     
-            <!--3 name column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Name</th>
+            <!--4 Client Name column -->
+            <ng-container matColumnDef="clientName">
+                <th mat-header-cell *matHeaderCellDef>Client Name</th>
                 <td mat-cell *matCellDef="let item">{{item.Name}}</td>
             </ng-container>
     
-            <!--4 phone column -->
+            <!--5 Phone column -->
             <ng-container matColumnDef="phone">
                 <th mat-header-cell *matHeaderCellDef>Phone</th>
                 <td mat-cell *matCellDef="let item">{{item.Phone}}</td>
             </ng-container>
     
-            <!--5 email column -->
+            <!--6 Email column -->
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef>Email</th>
                 <td mat-cell *matCellDef="let item">{{item.Email}}</td>
             </ng-container>
     
     
-            <!--8 actions column -->
+            <!--7 actions column -->
             <ng-container matColumnDef="actions" [stickyEnd]="isSticky">
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let item">
-                    <ul class="uk-iconnav">
-                        <li><button mat-icon-button color="primary" routerLink="/clients/view/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}" class='view-client-btn uk-text-center'><i class="far fa-eye"></i></button></li>
-                        <li><button mat-icon-button color="primary" routerLink="/clients/edit/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}"  class='edit-client-btn uk-text-center'><i class="far fa-edit"></i></button></li>
-                        <li><button mat-icon-button color="warn" (click)="openDeleteDialog(item.ClientId)" data-invoiceId="{{item.ClientId}}"  class='delete-client-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
-                    </ul>
+                <th mat-header-cell *matHeaderCellDef class="actionsCol">Actions</th>
+                <td mat-cell *matCellDef="let item" class="actionsCol">
+                    <button mat-icon-button color="primary" class="bg-accent" [matMenuTriggerFor]="beforeMenu"><i class="fas fa-ellipsis-v"></i></button>
+                    <mat-menu #beforeMenu="matMenu" xPosition="before">
+                        <button mat-menu-item color="primary" routerLink="/clients/view/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}" class='view-client-btn'><i class="far fa-eye uk-margin-small-right"></i> View</button>
+                        <button mat-menu-item color="primary" routerLink="/clients/edit/{{item.ClientId}}" data-invoiceId="{{item.ClientId}}"  class='edit-client-btn'><i class="far fa-edit uk-margin-small-right"></i> Edit</button>
+                        <button mat-menu-item color="warn" (click)="openDeleteDialog(item.ClientId)" data-invoiceId="{{item.ClientId}}"  class='delete-client-btn'><i class="far fa-trash-alt uk-margin-small-right"></i> Delete</button>
+                    </mat-menu>
                 </td>
             </ng-container>
     
@@ -111,8 +118,9 @@
             <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
     
         </table>
-        <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
+        
     </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
 </div>
 
 

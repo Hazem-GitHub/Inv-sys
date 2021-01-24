@@ -30,7 +30,7 @@ export class ExpensesService {
   }
   // Create Expense
   proceedExpense(detailsObj: any, totalsObj: any): Observable<any>{
-    const endpoint = `/api/CreateExpense?ClientId=${ detailsObj.ClientId}&TypeId=${detailsObj.TypeId }&Description=${ detailsObj.Description}&CurrencyId=${ detailsObj.CurrencyId}&TotalAmount=${totalsObj.TotalAmount }`;
+    const endpoint = `/api/CreateExpense?ClientId=${ detailsObj.ClientId}&TypeId=${detailsObj.TypeId }&Description=${ detailsObj.Description}&CurrencyId=${ detailsObj.CurrencyId}&TotalAmount=${totalsObj.TotalAmount }&InvoiceId=${detailsObj.InvoiceId }`;
     return this.http.get<any>(endpoint);
   }
   // Create Expense Item
@@ -41,7 +41,7 @@ export class ExpensesService {
 
   // Edit Expense
   editExpense(detailsObj: any, totalsObj: any): Observable<any>{
-    const endpoint = `/api/EditExpense?ExpenseId=${detailsObj.ExpenseId}&ClientId=${detailsObj.ClientId}&TypeId=${detailsObj.ExpenseTypeId}&Description=${detailsObj.Description}&CurrencyId=${detailsObj.CurrencyId}&TotalAmount=${totalsObj.TotalAmount}`;
+    const endpoint = `/api/EditExpense?ExpenseId=${detailsObj.ExpenseId}&ClientId=${detailsObj.ClientId}&TypeId=${detailsObj.ExpenseTypeId}&Description=${detailsObj.Description}&CurrencyId=${detailsObj.CurrencyId}&TotalAmount=${totalsObj.TotalAmount}&InvoiceId=${detailsObj.InvoiceId }`;
     return this.http.get<any>(endpoint);
   }
   // Edit Expense Items

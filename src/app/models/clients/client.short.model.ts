@@ -1,4 +1,4 @@
-export class ClientShort{
-    ClientId: number;
-    Name: string;
+export interface ClientShort{
+    ClientId: number,
+    Name: string
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 /*Models */
 import { Client } from '../../models/clients/client.model';
 /*Services */
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomSnackbarComponent } from '../utils/custom-snackbar/custom-snackbar.component';
 
-import { fromEvent } from 'rxjs';
+import { fromEvent, pipe } from 'rxjs';
 
 /*DECLARE $ for jquery */
 declare var $;
@@ -39,7 +39,7 @@ export class ClientsComponent implements OnInit {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    displayedColumns: string[] = [ 'ClientId', 'type', 'name', 'email', 'phone', 'actions' ];
+    displayedColumns: string[] = [ 'clientId', 'clientType', 'brand', 'clientName', 'email', 'phone', 'actions' ];
     allDataArr: Client[] = [];
     dataSource: any;
 

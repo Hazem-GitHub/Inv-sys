@@ -26,7 +26,7 @@ export class InvoicesService {
   }
   // Create Invoice
   proceedInvoice(detailsObj: any, totalsObj: any): Observable<any>{
-    const endpoint = `/api/CreateInvoice?ClientId=${ detailsObj.ClientId}&ProjectName=${detailsObj.ProjectName }&Description=${ detailsObj.Description}&PaymentMethodId=${detailsObj.PaymentMethodId }&CurrencyId=${ detailsObj.CurrencyId}&StatusId=${detailsObj.StatusId }&Taxed=${detailsObj.Taxed }&TaxId=${detailsObj.TaxId}&TotalAmount=${totalsObj.TotalAmount }&PaidAmount=${totalsObj.PaidAmount }&DueAmount=${ totalsObj.DueAmount}&SubTotal=${ totalsObj.SubTotal}&DueDate=${ detailsObj.DueDate }`;
+    const endpoint = `/api/CreateInvoice?ClientId=${ detailsObj.ClientId}&ProjectName=${detailsObj.ProjectName }&Description=${ detailsObj.Description}&PaymentMethodId=${detailsObj.PaymentMethodId }&CurrencyId=${ detailsObj.CurrencyId}&StatusId=${detailsObj.StatusId }&Taxed=${detailsObj.Taxed }&TaxId=${detailsObj.TaxId}&TotalAmount=${totalsObj.TotalAmount }&PaidAmount=${totalsObj.PaidAmount }&DueAmount=${ totalsObj.DueAmount}&SubTotal=${ totalsObj.SubTotal}&DueDate=${ detailsObj.DueDate }&CreateDate=${ detailsObj.CreateDate }`;
     return this.http.get<any>(endpoint);
   }
   // Create Invoice Items
@@ -36,7 +36,7 @@ export class InvoicesService {
   }
   // Edit Invoice
   editInvoice(detailsObj: any, totalsObj: any): Observable<any>{
-    const endpoint = `/api/EditInvoice?InvoiceId=${ detailsObj.InvoiceId }&DueDate=${ detailsObj.DueDate }&ClientId=${ detailsObj.ClientId }&ProjectName=${ detailsObj.ProjectName }&Description=${ detailsObj.Description }&PaymentMethodId=${ detailsObj.PaymentMethodId }&CurrencyId=${ detailsObj.CurrencyId }&StatusId=${ detailsObj.StatusId }&Taxed=${ detailsObj.Taxed }&TaxId=${ detailsObj.TaxId }&PaidAmount=${ totalsObj.PaidAmount }&DueAmount=${ totalsObj.DueAmount }&SubTotal=${ totalsObj.SubTotal }&TotalAmount=${totalsObj.TotalAmount }`;
+    const endpoint = `/api/EditInvoice?InvoiceId=${ detailsObj.InvoiceId }&DueDate=${ detailsObj.DueDate }&ClientId=${ detailsObj.ClientId }&ProjectName=${ detailsObj.ProjectName }&Description=${ detailsObj.Description }&PaymentMethodId=${ detailsObj.PaymentMethodId }&CurrencyId=${ detailsObj.CurrencyId }&StatusId=${ detailsObj.StatusId }&Taxed=${ detailsObj.Taxed }&TaxId=${ detailsObj.TaxId }&PaidAmount=${ totalsObj.PaidAmount }&DueAmount=${ totalsObj.DueAmount }&SubTotal=${ totalsObj.SubTotal }&TotalAmount=${totalsObj.TotalAmount }&CreateDate=${ detailsObj.CreateDate }`;
     return this.http.get<any>(endpoint);
   }
   // Edit Invoice Items
@@ -52,6 +52,11 @@ export class InvoicesService {
   // Delete Invoice
   deleteInvoice(invoiceId: number): Observable<any>{
     const endpoint = `/api/DeleteInvoice?InvoiceId=${ invoiceId }`;
+    return this.http.get<any>(endpoint);
+  }
+
+  getLastIssuedDate(): Observable<any> {
+    const endpoint = `/api/LastIssuedDate?`;
     return this.http.get<any>(endpoint);
   }
 

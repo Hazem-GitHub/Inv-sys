@@ -47,8 +47,8 @@
                 </ng-container>
             
                 <ng-container matColumnDef="setAsDefault" [stickyEnd]="isSticky">
-                    <th mat-header-cell *matHeaderCellDef> Set as Default </th>
-                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i">
+                    <th mat-header-cell *matHeaderCellDef class="actionsCol"> Set as Default </th>
+                    <td mat-cell *matCellDef="let i=index; let element" [formGroupName]="i" class="actionsCol">
                         <div class="uk-padding-small uk-padding-remove-horizontal">
                             <div class="uk-form-controls uk-margin-remove">
                                 <mat-checkbox class="uk-margin" color="primary" [checked]="taxForm.value.taxItems[i].setAsDefault" (change)="setDefault(element.taxId)" formControlName="setAsDefault"></mat-checkbox>

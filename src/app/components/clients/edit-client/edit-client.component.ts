@@ -85,7 +85,10 @@ export class EditClientComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]],
       fax: ['', Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)],
       website: ['', Validators.maxLength(200)],
-      typeId: ['', Validators.required]
+      typeId: ['', Validators.required],
+      brand: ['', [Validators.required, Validators.maxLength(50)]],
+      contactPerson: ['', Validators.maxLength(50)],
+
     });
 
     // Get client types list
@@ -122,6 +125,8 @@ export class EditClientComponent implements OnInit {
       this.editClientForm.controls.fax.setValue(this.allDataObj.Fax);
       this.editClientForm.controls.website.setValue(this.allDataObj.Website);
       this.editClientForm.controls.typeId.setValue(this.allDataObj.ClientTypeId);
+      this.editClientForm.controls.brand.setValue(this.allDataObj.Brand);
+      this.editClientForm.controls.contactPerson.setValue(this.allDataObj.ContactPerson);
 
       clientDetailsObservable.unsubscribe();
     });
@@ -140,7 +145,9 @@ export class EditClientComponent implements OnInit {
       Phone: '',
       Fax: '',
       Website: '',
-      TypeId: 0,
+      ClientTypeId: 0,
+      Brand: '',
+      ContactPerson: '',
     };
 
     // filling detailsObj with form data to be send to proceedClient method in clients.service.ts
@@ -151,7 +158,9 @@ export class EditClientComponent implements OnInit {
     detailsObj.Phone = this.editClientForm.value.phone;
     detailsObj.Fax = this.editClientForm.value.fax;
     detailsObj.Website = this.editClientForm.value.website;
-    detailsObj.TypeId = this.editClientForm.value.typeId;
+    detailsObj.ClientTypeId = this.editClientForm.value.typeId;
+    detailsObj.Brand = this.editClientForm.value.brand;
+    detailsObj.ContactPerson = this.editClientForm.value.contactPerson;
     console.log(detailsObj);
 
     this.clientsService.editClient( detailsObj, this.clientId ).subscribe(data => {

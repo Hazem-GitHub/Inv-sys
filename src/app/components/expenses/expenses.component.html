@@ -1,8 +1,8 @@
-<div class="add-btn-padding">
+<!-- <div class="add-btn-padding">
     <button mat-flat-button color="primary" routerLink="new">
         <i class="fas fa-plus"></i> Add New Expense
     </button>
-</div>
+</div> -->
 <div class="container-full-width">
     <div class="top-header-padding">
         <h3><strong>Expenses List</strong></h3>
@@ -66,13 +66,14 @@
     
             <!--8 actions column -->
             <ng-container matColumnDef="actions" [stickyEnd]="isSticky">
-                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                <td mat-cell *matCellDef="let item">
-                    <ul class="uk-iconnav">
-                        <li><button mat-icon-button color="primary" routerLink="/expenses/view/{{item.id}}" data-invoiceId="{{item.id}}" class='view-expense-btn uk-text-center'><i class="far fa-eye"></i></button></li>
-                        <li><button mat-icon-button color="primary" routerLink="/expenses/edit/{{item.id}}" data-invoiceId="{{item.id}}"  class='edit-expense-btn uk-text-center'><i class="far fa-edit"></i></button></li>
-                        <li><button mat-icon-button color="warn" (click)="openDeleteDialog(item.id)" data-invoiceId="{{item.id}}"  class='delete-expense-btn uk-text-center'><i class="far fa-trash-alt"></i></button></li>
-                    </ul>
+                <th mat-header-cell *matHeaderCellDef class="actionsCol">Actions</th>
+                <td mat-cell *matCellDef="let item" class="actionsCol">
+                    <button mat-icon-button color="primary" class="bg-accent" [matMenuTriggerFor]="beforeMenu"><i class="fas fa-ellipsis-v"></i></button>
+                    <mat-menu #beforeMenu="matMenu" xPosition="before">
+                        <button mat-menu-item color="primary" routerLink="/expenses/view/{{item.id}}" data-invoiceId="{{item.id}}" class='view-expense-btn'><i class="far fa-eye uk-margin-small-right"></i> View</button>
+                        <!-- <button mat-menu-item color="primary" routerLink="/expenses/edit/{{item.id}}" data-invoiceId="{{item.id}}"  class='edit-expense-btn'><i class="far fa-edit uk-margin-small-right"></i> Edit</button> -->
+                        <button mat-menu-item color="warn" (click)="openDeleteDialog(item.id)" data-invoiceId="{{item.id}}"  class='delete-expense-btn'><i class="far fa-trash-alt uk-margin-small-right"></i> Delete</button>
+                    </mat-menu>
                 </td>
             </ng-container>
     
@@ -80,8 +81,9 @@
             <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
     
         </table>
-        <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
+        
     </div>
+    <mat-paginator [length]="resultsLength" [pageSize]="resultsPerPage" [pageSizeOptions]="[1, 5, 10, 25, 100]"></mat-paginator>
 </div>
 
 

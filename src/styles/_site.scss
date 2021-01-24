@@ -401,6 +401,9 @@ table.uk-table{
                     min-width: 30px!important;
                     // text-align: center;
                 }
+                &.actionsCol {
+                    min-width: 70px!important;
+                }
                 &.mat-table-sticky{
                     right: -2px!important;
                 }
@@ -445,6 +448,9 @@ table.uk-table{
                     padding: 12px 12px!important;
                     min-width: 30px!important;
                     // text-align: center!important;
+                }
+                &.actionsCol {
+                    min-width: 70px!important;
                 }
                 &.mat-table-sticky{
                     right: -2px!important;
